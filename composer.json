@@ -9,6 +9,10 @@
       "email": "chris@throup.org.uk"
     }
   ],
+  "autoload": {
+    "classmap": ["src/"]
+  },
+  "include-path": ["src"],
   "require-dev": {
     "phing/phing": "~2.9",
     "squizlabs/php_codesniffer": "~2.1",
