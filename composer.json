@@ -6,7 +6,9 @@
   "authors": [
     {
       "name": "Chris Throup",
-      "email": "chris@throup.org.uk"
+      "email": "chris@throup.org.uk",
+      "homepage": "http://chris.throup.org.uk/",
+      "role": "Developer"
     }
   ],
   "autoload": {
