@@ -1,0 +1,12 @@
+{
+  "name": "throup/colourspace",
+  "description": "Library to aid the manipulation of colours within different colour spaces",
+  "minimum-stability": "stable",
+  "license": "GPL-3.0+",
+  "authors": [
+    {
+      "name": "Chris Throup",
+      "email": "chris@throup.org.uk"
+    }
+  ]
+}
