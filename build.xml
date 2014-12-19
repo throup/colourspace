@@ -1,14 +1,20 @@
 <?xml version="1.0"?>
 <project name="colourspace" default="build">
+    <autoloader autoloaderpath="vendor/autoload.php"/>
+
     <property name="sourcedir" value="${project.basedir}/src"/>
     <property name="testdir"   value="${project.basedir}/tests"/>
     <property name="builddir"  value="${project.basedir}/build"/>
     <property name="vendordir" value="${project.basedir}/vendor"/>
     <property name="configdir" value="${project.basedir}/config"/>
+    <property name="docdir" value="${project.basedir}/docs"/>
 
-    <property name="bootstrap" value="vendor/bootstrap.php"/>
+    <property name="bootstrap" value="${vendordir}/bootstrap.php"/>
 
-    <property name="bin.phpunit" value="vendor/bin/phpunit"/>
+    <property name="bin.phpunit" value="${vendordir}/bin/phpunit"/>
+    <property name="bin.phpdcd"  value="${vendordir}/bin/phpdcd"/>
+    <property name="bin.phpdox"  value="${vendordir}/bin/phpdox"/>
+    <property name="bin.pdepend" value="${vendordir}/bin/pdepend"/>
 
     <property name="config.phpunit" value="${configdir}/phpunit.xml"/>
     <property name="config.phpdox" value="${configdir}/phpdox.xml"/>
@@ -62,11 +68,45 @@
         </phpmd>
     </target>
 
+    <target name="phpcpd" depends="prepare">
+        <phpcpd minTokens="40" minLines="3">
+            <fileset refid="files.source"/>
+            <formatter type="pmd" outfile="${builddir}/pmd-cpd.xml"/>
+        </phpcpd>
+    </target>
+
+    <target name="phpdcd">
+        <exec executable="${bin.phpdcd}" logoutput="/dev/stdout">
+            <arg value="--recursive"/>
+            <arg path="${sourcedir}"/>
+        </exec>
+    </target>
+
     <target name="phpdox" depends="phpunit,codesniffer,phploc,phpmd">
-        <exec executable="vendor/bin/phpdox" logoutput="/dev/stdout">
+        <exec executable="${bin.phpdox}" logoutput="/dev/stdout">
             <arg value="--file"/><arg path="${config.phpdox}"/>
         </exec>
     </target>
 
-    <target name="build" depends="phpdox"/>
+    <target name="phpdoc" depends="prepare">
+        <mkdir dir="${docdir}/phpdoc"/>
+        <phpdoc2 title="API Documentation"
+                 destdir="${docdir}/phpdoc"
+                 template="responsive-twig">
+            <fileset refid="files.source"/>
+        </phpdoc2>
+    </target>
+
+    <target name="phpdepend" depends="prepare,phpunit">
+        <exec executable="${bin.pdepend}" logoutput="/dev/stdout">
+            <arg value="--jdepend-chart=${builddir}/chart.svg"/>
+            <arg value="--jdepend-xml=${builddir}/jdepend.xml"/>
+            <arg value="--overview-pyramid=${builddir}/pyramid.svg"/>
+            <arg value="--summary-xml=${builddir}/summary.xml"/>
+            <arg value="--coverage-report=${builddir}/coverage/index.xml"/>
+            <arg path="${sourcedir}"/>
+        </exec>
+    </target>
+
+    <target name="build" depends="phpdox,phpcpd"/>
 </project>

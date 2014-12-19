@@ -21,6 +21,7 @@
     "phing/phing": "~2.9",
     "squizlabs/php_codesniffer": "~2.1",
     "sebastian/phpcpd": "~2",
+    "sebastian/phpdcd": "~1",
     "phpdocumentor/phpdocumentor": "~2.8",
     "theseer/phpdox": "dev-master",
     "phploc/phploc": "~2",

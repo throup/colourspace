@@ -25,7 +25,7 @@
                     <filter directory="${phpDox.project.source}" />
                 </source>
             </enrich>
-            <build engine="html" enabled="true" output="html">
+            <build engine="html" enabled="true" output="phpdox">
                 <template dir="${phpDox.home}/templates/html" />
                 <file extension="xhtml" />
             </build>

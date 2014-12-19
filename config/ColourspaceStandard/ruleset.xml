@@ -27,7 +27,6 @@
     <rule ref="Generic.Files.OneInterfacePerFile"/>
     <rule ref="Generic.Files.OneTraitPerFile"/>
     <rule ref="Generic.Formatting.DisallowMultipleStatements"/>
-    <rule ref="Generic.Formatting.MultipleStatementAlignment"/>
     <rule ref="Generic.Formatting.SpaceAfterCast"/>
     <rule ref="Generic.Functions.CallTimePassByReference"/>
     <rule ref="Generic.Functions.FunctionCallArgumentSpacing"/>
@@ -57,7 +56,6 @@
     <rule ref="PEAR.ControlStructures.MultiLineCondition"/>
     <rule ref="PEAR.Formatting.MultiLineAssignment"/>
     <rule ref="PEAR.Functions.FunctionCallSignature"/>
-    <rule ref="PEAR.Functions.FunctionDeclaration"/>
     <rule ref="PEAR.Functions.ValidDefaultValue"/>
     <rule ref="PEAR.WhiteSpace.ObjectOperatorIndent"/>
     <rule ref="PEAR.WhiteSpace.ScopeClosingBrace"/>
@@ -88,12 +86,10 @@
     <rule ref="Squiz.Commenting.DocCommentAlignment"/>
     <rule ref="Squiz.Commenting.EmptyCatchComment"/>
     <rule ref="Squiz.Commenting.FileComment"/>
-    <rule ref="Squiz.Commenting.FunctionComment"/>
     <rule ref="Squiz.Commenting.FunctionCommentThrowTag"/>
     <rule ref="Squiz.Commenting.InlineComment"/>
     <rule ref="Squiz.Commenting.LongConditionClosingComment"/>
     <rule ref="Squiz.Commenting.PostStatementComment"/>
-    <rule ref="Squiz.Commenting.VariableComment"/>
     <rule ref="Squiz.ControlStructures.ControlSignature"/>
     <rule ref="Squiz.ControlStructures.ElseIfDeclaration"/>
     <rule ref="Squiz.ControlStructures.ForEachLoopDeclaration"/>
@@ -122,15 +118,12 @@
     <rule ref="Squiz.Debug.JavaScriptLint"/>
     <rule ref="Squiz.Debug.JSLint"/>
     <rule ref="Squiz.Formatting.OperatorBracket"/>
-    <rule ref="Squiz.Functions.FunctionDeclarationArgumentSpacing"/>
     <rule ref="Squiz.Functions.FunctionDeclaration"/>
     <rule ref="Squiz.Functions.FunctionDuplicateArgument"/>
     <rule ref="Squiz.Functions.GlobalFunction"/>
     <rule ref="Squiz.Functions.LowercaseFunctionKeywords"/>
-    <rule ref="Squiz.Functions.MultiLineFunctionDeclaration"/>
     <rule ref="Squiz.NamingConventions.ConstantCase"/>
     <rule ref="Squiz.NamingConventions.ValidFunctionName"/>
-    <rule ref="Squiz.NamingConventions.ValidVariableName"/>
     <rule ref="Squiz.Objects.DisallowObjectStringIndex"/>
     <rule ref="Squiz.Objects.ObjectInstantiation"/>
     <rule ref="Squiz.Objects.ObjectMemberComma"/>
@@ -138,7 +131,6 @@
     <rule ref="Squiz.Operators.IncrementDecrementUsage"/>
     <rule ref="Squiz.Operators.ValidLogicalOperators"/>
     <rule ref="Squiz.PHP.CommentedOutCode"/>
-    <rule ref="Squiz.PHP.DisallowBooleanStatement"/>
     <rule ref="Squiz.PHP.DisallowComparisonAssignment"/>
     <rule ref="Squiz.PHP.DisallowInlineIf"/>
     <rule ref="Squiz.PHP.DisallowMultipleAssignments"/>
@@ -161,14 +153,11 @@
     <rule ref="Squiz.Strings.EchoedStrings"/>
     <rule ref="Squiz.WhiteSpace.CastSpacing"/>
     <rule ref="Squiz.WhiteSpace.ControlStructureSpacing"/>
-    <rule ref="Squiz.WhiteSpace.FunctionClosingBraceSpace"/>
     <rule ref="Squiz.WhiteSpace.FunctionOpeningBraceSpace"/>
-    <rule ref="Squiz.WhiteSpace.FunctionSpacing"/>
     <rule ref="Squiz.WhiteSpace.LanguageConstructSpacing"/>
     <rule ref="Squiz.WhiteSpace.LogicalOperatorSpacing"/>
     <rule ref="Squiz.WhiteSpace.MemberVarSpacing"/>
     <rule ref="Squiz.WhiteSpace.ObjectOperatorSpacing"/>
-    <rule ref="Squiz.WhiteSpace.OperatorSpacing"/>
     <rule ref="Squiz.WhiteSpace.PropertyLabelSpacing"/>
     <rule ref="Squiz.WhiteSpace.ScopeClosingBrace"/>
     <rule ref="Squiz.WhiteSpace.ScopeKeywordSpacing"/>
