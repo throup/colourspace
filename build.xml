@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<project name="colourspace" default="build">
+    <property name="sourcedir"   value="src"/>
+    <property name="testdir"  value="tests"/>
+    <property name="builddir" value="build"/>
+    <property name="vendordir" value="${project.basedir}/vendor"/>
+
+    <property name="bootstrap" value="vendor/bootstrap.php"/>
+
+    <property name="bin.phpunit" value="vendor/bin/phpunit"/>
+
+    <property name="config.phpunit" value="${project.basedir}/phpunit.xml"/>
+    <property name="config.phpdox" value="${project.basedir}/phpdox.xml"/>
+
+    <fileset dir="${sourcedir}" id="files.source">
+        <include name="**/*.php" />
+        <include name="*.php" />
+    </fileset>
+    <fileset dir="${testdir}" id="files.test">
+        <include name="**/*.php" />
+        <include name="*.php" />
+    </fileset>
+
+    <target name="clean">
+        <delete dir="${builddir}"/>
+    </target>
+
+    <target name="prepare" depends="clean">
+        <mkdir dir="${builddir}"/>
+    </target>
+
+    <target name="phpunit" depends="prepare">
+        <exec executable="${bin.phpunit}" logoutput="/dev/stdout">
+            <arg value="-c"/>
+            <arg file="${config.phpunit}"/>
+        </exec>
+    </target>
+
+    <target name="codesniffer" depends="prepare">
+        <mkdir dir="${builddir}/logs"/>
+        <phpcodesniffer>
+            <fileset refid="files.source"/>
+            <formatter type="summary" usefile="false"/>
+            <formatter type="checkstyle" outfile="${builddir}/logs/checkstyle.xml"/>
+            <formatter type="xml" outfile="${builddir}/logs/phpcs.xml"/>
+        </phpcodesniffer>
+    </target>
+
+    <target name="phploc" depends="prepare">
+        <phploc countTests="true" reportType="xml" reportDirectory="${builddir}" reportName="phploc">
+            <fileset refid="files.source"/>
+            <fileset refid="files.test"/>
+        </phploc>
+    </target>
+
+    <target name="phpmd" depends="prepare">
+        <includepath classpath="${vendordir}/phpmd/phpmd/src/main/php" />
+        <phpmd>
+            <fileset refid="files.source"/>
+            <formatter type="xml" outfile="${builddir}/pmd.xml"/>
+        </phpmd>
+    </target>
+
+    <target name="phpdox" depends="phpunit,codesniffer,phploc,phpmd">
+        <exec executable="vendor/bin/phpdox" logoutput="/dev/stdout">
+            <arg value="--file"/><arg path="${config.phpdox}"/>
+        </exec>
+    </target>
+
+    <target name="build" depends="phpdox"/>
+</project>
