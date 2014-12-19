@@ -9,8 +9,8 @@
 
     <property name="bin.phpunit" value="vendor/bin/phpunit"/>
 
-    <property name="config.phpunit" value="${project.basedir}/phpunit.xml"/>
-    <property name="config.phpdox" value="${project.basedir}/phpdox.xml"/>
+    <property name="config.phpunit" value="${project.basedir}/config/phpunit.xml"/>
+    <property name="config.phpdox" value="${project.basedir}/config/phpdox.xml"/>
 
     <fileset dir="${sourcedir}" id="files.source">
         <include name="**/*.php" />
@@ -37,12 +37,11 @@
     </target>
 
     <target name="codesniffer" depends="prepare">
-        <mkdir dir="${builddir}/logs"/>
         <phpcodesniffer>
             <fileset refid="files.source"/>
             <formatter type="summary" usefile="false"/>
-            <formatter type="checkstyle" outfile="${builddir}/logs/checkstyle.xml"/>
-            <formatter type="xml" outfile="${builddir}/logs/phpcs.xml"/>
+            <formatter type="checkstyle" outfile="${builddir}/checkstyle.xml"/>
+            <formatter type="xml" outfile="${builddir}/phpcs.xml"/>
         </phpcodesniffer>
     </target>
 
