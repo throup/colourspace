@@ -1,16 +1,18 @@
 <?xml version="1.0"?>
 <project name="colourspace" default="build">
-    <property name="sourcedir"   value="src"/>
-    <property name="testdir"  value="tests"/>
-    <property name="builddir" value="build"/>
+    <property name="sourcedir" value="${project.basedir}/src"/>
+    <property name="testdir"   value="${project.basedir}/tests"/>
+    <property name="builddir"  value="${project.basedir}/build"/>
     <property name="vendordir" value="${project.basedir}/vendor"/>
+    <property name="configdir" value="${project.basedir}/config"/>
 
     <property name="bootstrap" value="vendor/bootstrap.php"/>
 
     <property name="bin.phpunit" value="vendor/bin/phpunit"/>
 
-    <property name="config.phpunit" value="${project.basedir}/config/phpunit.xml"/>
-    <property name="config.phpdox" value="${project.basedir}/config/phpdox.xml"/>
+    <property name="config.phpunit" value="${configdir}/phpunit.xml"/>
+    <property name="config.phpdox" value="${configdir}/phpdox.xml"/>
+    <property name="config.phpcs" value="${configdir}/ColourspaceStandard/ruleset.xml"/>
 
     <fileset dir="${sourcedir}" id="files.source">
         <include name="**/*.php" />
@@ -37,7 +39,7 @@
     </target>
 
     <target name="codesniffer" depends="prepare">
-        <phpcodesniffer>
+        <phpcodesniffer standard="${config.phpcs}">
             <fileset refid="files.source"/>
             <formatter type="summary" usefile="false"/>
             <formatter type="checkstyle" outfile="${builddir}/checkstyle.xml"/>
