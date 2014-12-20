@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<phpdocumentor>
+    <parser>
+        <default-package-name>Colourspace</default-package-name>
+        <target>../build/phpdoc</target>
+    </parser>
+    <transformer>
+        <target>../docs/phpdoc</target>
+    </transformer>
+    <files>
+        <directory>../src</directory>
+    </files>
+    <plugins>
+        <plugin path="Core" />
+        <plugin path="Twig" />
+    </plugins>
+    <transformations>
+        <template name="responsive-twig" />
+    </transformations>
+    <logging>
+        <level>warn</level>
+        <paths>
+            <default>../build/phpdoc/log/{DATE}.log</default>
+            <errors>../build/phpdoc/log/{DATE}.errors.log</errors>
+        </paths>
+    </logging>
+</phpdocumentor>

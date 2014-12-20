@@ -14,10 +14,12 @@
     <property name="bin.phpunit" value="${vendordir}/bin/phpunit"/>
     <property name="bin.phpdcd"  value="${vendordir}/bin/phpdcd"/>
     <property name="bin.phpdox"  value="${vendordir}/bin/phpdox"/>
+    <property name="bin.phpdoc"  value="${vendordir}/bin/phpdoc"/>
     <property name="bin.pdepend" value="${vendordir}/bin/pdepend"/>
 
     <property name="config.phpunit" value="${configdir}/phpunit.xml"/>
     <property name="config.phpdox" value="${configdir}/phpdox.xml"/>
+    <property name="config.phpdoc" value="${configdir}/phpdoc.xml"/>
     <property name="config.phpcs" value="${configdir}/ColourspaceStandard/ruleset.xml"/>
 
     <fileset dir="${sourcedir}" id="files.source">
@@ -92,12 +94,13 @@
     </target>
 
     <target name="phpdoc" depends="prepare">
-        <mkdir dir="${docdir}/phpdoc"/>
-        <phpdoc2 title="API Documentation"
-                 destdir="${docdir}/phpdoc"
-                 template="responsive-twig">
-            <fileset refid="files.source"/>
-        </phpdoc2>
+        <!-- NB this will not work correctly until the application is updated to work with recent
+                versions of php-parser. -->
+        <exec executable="${bin.phpdoc}" logoutput="/dev/stdout">
+            <arg value="--config"/><arg path="${config.phpdoc}"/>
+            <arg value="--sourcecode"/>
+            <arg value="--no-interaction"/>
+        </exec>
     </target>
 
     <target name="phpdepend" depends="prepare,phpunit">
@@ -111,5 +114,5 @@
         </exec>
     </target>
 
-    <target name="build" depends="phpdox,phpcpd,phpdcd,phpdepend,phpdoc"/>
+    <target name="build" depends="phpdox,phpcpd,phpdcd,phpdepend"/>
 </project>
