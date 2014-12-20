@@ -120,7 +120,6 @@
     <rule ref="Squiz.Functions.GlobalFunction"/>
     <rule ref="Squiz.Functions.LowercaseFunctionKeywords"/>
     <rule ref="Squiz.NamingConventions.ConstantCase"/>
-    <rule ref="Squiz.NamingConventions.ValidFunctionName"/>
     <rule ref="Squiz.Objects.DisallowObjectStringIndex"/>
     <rule ref="Squiz.Objects.ObjectInstantiation"/>
     <rule ref="Squiz.Objects.ObjectMemberComma"/>

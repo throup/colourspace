@@ -8,7 +8,7 @@
     <logging>
         <log type="junit" target="../build/phpunit/index.xml"/>
         <log type="coverage-xml" target="../build/coverage"/>
-        <log type="coverage-html" target="../build/coverage" charset="UTF-8"/>
+        <log type="coverage-html" target="../docs/coverage" charset="UTF-8"/>
     </logging>
     <filter>
         <blacklist>

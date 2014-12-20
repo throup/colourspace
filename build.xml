@@ -67,6 +67,7 @@
         <phpmd>
             <fileset refid="files.source"/>
             <formatter type="xml" outfile="${builddir}/pmd.xml"/>
+            <formatter type="html" outfile="${docdir}/pmd.html"/>
         </phpmd>
     </target>
 
@@ -74,12 +75,12 @@
         <phpcpd minTokens="40" minLines="3">
             <fileset refid="files.source"/>
             <formatter type="pmd" outfile="${builddir}/pmd-cpd.xml"/>
+            <formatter type="default" outfile="${docdir}/phpcpd.txt"/>
         </phpcpd>
     </target>
 
     <target name="phpdcd">
-        <exec executable="${bin.phpdcd}" logoutput="/dev/stdout">
-            <arg value="--recursive"/>
+        <exec executable="${bin.phpdcd}" logoutput="${docdir}/phpdcd.txt">
             <arg path="${sourcedir}"/>
         </exec>
     </target>
@@ -101,14 +102,14 @@
 
     <target name="phpdepend" depends="prepare,phpunit">
         <exec executable="${bin.pdepend}" logoutput="/dev/stdout">
-            <arg value="--jdepend-chart=${builddir}/chart.svg"/>
+            <arg value="--jdepend-chart=${docdir}/chart.svg"/>
             <arg value="--jdepend-xml=${builddir}/jdepend.xml"/>
-            <arg value="--overview-pyramid=${builddir}/pyramid.svg"/>
+            <arg value="--overview-pyramid=${docdir}/pyramid.svg"/>
             <arg value="--summary-xml=${builddir}/summary.xml"/>
             <arg value="--coverage-report=${builddir}/coverage/index.xml"/>
             <arg path="${sourcedir}"/>
         </exec>
     </target>
 
-    <target name="build" depends="phpdox,phpcpd,phpdcd,phpdoc"/>
+    <target name="build" depends="phpdox,phpcpd,phpdcd,phpdepend,phpdoc"/>
 </project>
