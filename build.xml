@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<project name="colourspace" default="build">
+<project name="Colourspace" default="build">
     <autoloader autoloaderpath="vendor/autoload.php"/>
 
     <property name="sourcedir" value="${project.basedir}/src"/>
@@ -31,10 +31,12 @@
 
     <target name="clean">
         <delete dir="${builddir}"/>
+        <delete dir="${docdir}"/>
     </target>
 
     <target name="prepare" depends="clean">
         <mkdir dir="${builddir}"/>
+        <mkdir dir="${docdir}"/>
     </target>
 
     <target name="phpunit" depends="prepare">

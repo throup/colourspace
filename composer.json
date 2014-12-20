@@ -13,7 +13,7 @@
   ],
   "autoload": {
     "psr-4": {
-      "colourspace\\": "src/"
+      "Colourspace\\": "src/"
     }
   },
   "include-path": ["src"],

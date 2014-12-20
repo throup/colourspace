@@ -1,18 +1,24 @@
 <?php
 
-namespace colourspace;
+namespace Colourspace;
 
 /**
  * Class RgbColourTest
- *
- * @package throup\colourspace
  */
 class RgbColourTest extends \PHPUnit_Framework_TestCase {
     /**
      * @test
      */
-    public function init() {
-        new RgbColour();
+    public function constructionWithValues_setsRGBValues() {
+        $red   = 0.2;
+        $green = 0.4;
+        $blue  = 0.8;
+
+        $colour = new RgbColour($red, $green, $blue);
+
+        $this->assertEquals($red,   $colour->getRed());
+        $this->assertEquals($green, $colour->getGreen());
+        $this->assertEquals($blue,  $colour->getBlue());
     }
 
     /**

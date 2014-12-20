@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <phpdox xmlns="http://xml.phpdox.net/config" silent="false">
-    <project name="colourspace" source="${basedir}/../src" workdir="${basedir}/../build/phpdox/xml">
+    <project name="Colourspace" source="${basedir}/../src" workdir="${basedir}/../build/phpdox/xml">
         <collector publiconly="false" backend="parser">
             <include mask="*.php" />
             <exclude mask="" />

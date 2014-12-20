@@ -7,10 +7,10 @@
  * @licence   GPL-3.0+
  */
 
-namespace colourspace;
+namespace Colourspace;
 
 /**
- * Class RgbColour
+ * Represents a colour in an RGB colourspace
  */
 class RgbColour {
     /**
