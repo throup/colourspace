@@ -108,5 +108,5 @@
         </exec>
     </target>
 
-    <target name="build" depends="phpdox,phpcpd"/>
+    <target name="build" depends="phpdox,phpcpd,phpdcd,phpdoc"/>
 </project>

@@ -1,11 +1,16 @@
 <?php
+/**
+ * This file contains the RgbColour class.
+ *
+ * @author    Chris Throup <chris@throup.org.uk>
+ * @copyright 2014 Chris Throup
+ * @licence   GPL-3.0+
+ */
 
 namespace colourspace;
 
 /**
  * Class RgbColour
- *
- * @package colourspace
  */
 class RgbColour {
     /**
@@ -52,17 +57,17 @@ class RgbColour {
     }
 
     /**
-     * @type float
+     * @var float
      */
     private $red   = 0.0;
 
     /**
-     * @type float
+     * @var float
      */
     private $green = 0.0;
 
     /**
-     * @type float
+     * @var float
      */
     private $blue  = 0.0;
 }
