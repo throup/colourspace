@@ -95,4 +95,85 @@ class RgbColour {
      * @var float
      */
     private $blue  = 0.0;
+
+    /**
+     * Gets the X component of this colour's XYZ representation; in
+     * the range [0.0–1.0].
+     *
+     * @return float
+     */
+    public function getX() {
+        $XYZ = $this->getXYZ();
+        return $XYZ['X'];
+    }
+
+    /**
+     * Gets the Y component of this colour's XYZ representation; in
+     * the range [0.0–1.0].
+     *
+     * @return float
+     */
+    public function getY() {
+        $XYZ = $this->getXYZ();
+        return $XYZ['Y'];
+    }
+
+    /**
+     * Gets the Z component of this colour's XYZ representation; in
+     * the range [0.0–1.0].
+     *
+     * @return float
+     */
+    public function getZ() {
+        $XYZ = $this->getXYZ();
+        return $XYZ['Z'];
+    }
+
+    /**
+     * Calculates the XYZ representation for this colour.
+     *
+     * @return float[]|array {
+     *     @var float $X The X component of this colour's XYZ representation;
+     *                   in the range [0.0–1.0].
+     *     @var float $Y The Y component of this colour's XYZ representation;
+     *                   in the range [0.0–1.0].
+     *     @var float $Z The Z component of this colour's XYZ representation;
+     *                   in the range [0.0–1.0].
+     * }
+     */
+    protected function getXYZ() {
+        $R = $this->applyGamma($this->red);
+        $G = $this->applyGamma($this->green);
+        $B = $this->applyGamma($this->blue);
+
+        $X = $R * 0.4124 + $G * 0.3576 + $B * 0.1805;
+        $Y = $R * 0.2126 + $G * 0.7152 + $B * 0.0722;
+        $Z = $R * 0.0193 + $G * 0.1192 + $B * 0.9505;
+
+        return [
+            'X' => $X,
+            'Y' => $Y,
+            'Z' => $Z,
+        ];
+    }
+
+    /**
+     * Applies the gamma curve appropriate to this RGB colour space.
+     *
+     * NB this initial implementation is for the sRGB space which does
+     * something a bit funky with the smaller values. Most RGB spaces simply
+     * apply an exponential factor.
+     *
+     * @param float $input The value to which the adjustment should be applied.
+     *
+     * @return float
+     */
+    protected function applyGamma($input) {
+        if ($input > 0.04045) {
+            $output = pow((($input + 0.055) / 1.055), 2.4);
+        } else {
+            $output = $input / 12.92;
+        }
+        return $output;
+    }
 }

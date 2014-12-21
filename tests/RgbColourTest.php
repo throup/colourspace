@@ -44,6 +44,42 @@ class RgbColourTest extends \PHPUnit_Framework_TestCase {
     }
 
     /**
+     * @test
+     */
+    public function getX_returnsExpectedValues() {
+        $R = 1.0;    $G = 0.0;    $B = 0.0;
+        $X = 0.4124;
+
+        $colour = $this->generateRgbColour($R, $G, $B);
+
+        $this->assertEquals($X, $colour->getX());
+    }
+
+    /**
+     * @test
+     */
+    public function getY_returnsExpectedValues() {
+        $R = 1.0;    $G = 0.0;    $B = 0.0;
+        $Y = 0.2126;
+
+        $colour = $this->generateRgbColour($R, $G, $B);
+
+        $this->assertEquals($Y, $colour->getY());
+    }
+
+    /**
+     * @test
+     */
+    public function getZ_returnsExpectedValues() {
+        $R = 1.0;    $G = 0.0;    $B = 0.0;
+        $Z = 0.0193;
+
+        $colour = $this->generateRgbColour($R, $G, $B);
+
+        $this->assertEquals($Z, $colour->getZ());
+    }
+
+    /**
      * Generate a testable colour object for the provided RGB representation.
      *
      * @param float $red   The red component of this colour's RGB
