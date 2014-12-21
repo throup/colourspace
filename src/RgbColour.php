@@ -16,9 +16,12 @@ class RgbColour {
     /**
      * Instantiate a colour for the provided RGB representation.
      *
-     * @param float $red   The red component of this colour's RGB representation; in the range [0.0–1.0].
-     * @param float $green The green component of this colour's RGB representation; in the range [0.0–1.0].
-     * @param float $blue  The blue component of this colour's RGB representation; in the range [0.0–1.0].
+     * @param float $red   The red component of this colour's RGB
+     *                     representation; in the range [0.0–1.0].
+     * @param float $green The green component of this colour's RGB
+     *                     representation; in the range [0.0–1.0].
+     * @param float $blue  The blue component of this colour's RGB
+     *                     representation; in the range [0.0–1.0].
      */
     public function __construct($red = 0.0, $green = 0.0, $blue = 0.0) {
         $this->red   = (float) $red;
@@ -27,7 +30,8 @@ class RgbColour {
     }
 
     /**
-     * Gets the red component of this colour's RGB representation; in the range [0.0–1.0].
+     * Gets the red component of this colour's RGB representation; in the
+     * range [0.0–1.0].
      *
      * @return float
      */
@@ -36,7 +40,8 @@ class RgbColour {
     }
 
     /**
-     * Gets the green component of this colour's RGB representation; in the range [0.0–1.0].
+     * Gets the green component of this colour's RGB representation; in the
+     * range [0.0–1.0].
      *
      * @return float
      */
@@ -45,7 +50,8 @@ class RgbColour {
     }
 
     /**
-     * Gets the blue component of this colour's RGB representation; in the range [0.0–1.0].
+     * Gets the blue component of this colour's RGB representation; in the
+     * range [0.0–1.0].
      *
      * @return float
      */
@@ -56,7 +62,7 @@ class RgbColour {
     /**
      * Determine if this colour is equal to another.
      *
-     * @param  self $second The other colour to which this one will be compared.
+     * @param self $second The other colour to which this one will be compared.
      *
      * @return bool
      */
@@ -67,21 +73,24 @@ class RgbColour {
     }
 
     /**
-     * The red component of this colour's RGB representation; in the range [0.0–1.0].
+     * The red component of this colour's RGB representation; in the
+     * range [0.0–1.0].
      *
      * @var float
      */
     private $red   = 0.0;
 
     /**
-     * The green component of this colour's RGB representation; in the range [0.0–1.0].
+     * The green component of this colour's RGB representation; in the
+     * range [0.0–1.0].
      *
      * @var float
      */
     private $green = 0.0;
 
     /**
-     * The blue component of this colour's RGB representation; in the range [0.0–1.0].
+     * The blue component of this colour's RGB representation; in the
+     * range [0.0–1.0].
      *
      * @var float
      */
