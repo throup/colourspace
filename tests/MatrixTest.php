@@ -70,4 +70,32 @@ class MatrixTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals($expected, $first->add($second));
         $this->assertEquals($expected, $second->add($first));
     }
+
+    /**
+     * @test
+     */
+    public function rows_returnsCorrectValue() {
+        $matrix = new Matrix(
+            [
+                [ 1,  2,  3],
+                [ 4,  5,  6],
+            ]
+        );
+
+        $this->assertEquals(2, $matrix->rows());
+    }
+
+    /**
+     * @test
+     */
+    public function columns_returnsCorrectValue() {
+        $matrix = new Matrix(
+            [
+                [ 1,  2,  3],
+                [ 4,  5,  6],
+            ]
+        );
+
+        $this->assertEquals(3, $matrix->columns());
+    }
 }

@@ -39,4 +39,14 @@ class Matrix extends ArrayIterator {
             $newrow[$colid] = $col + $row2[$colid];
         }
         return $newrow;
-    }}
+    }
+
+    public function rows() {
+        return count($this);
+    }
+
+    public function columns() {
+        $row = reset($this);
+        return count($row);
+    }
+}
