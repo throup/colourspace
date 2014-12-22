@@ -26,6 +26,7 @@
     "theseer/phpdox": "dev-master",
     "phploc/phploc": "~2",
     "phpmd/phpmd": "~2.1",
-    "phpunit/phpunit": "~4.4"
+    "phpunit/phpunit": "~4.4",
+    "halleck45/php-metrics": "*"
   }
 }

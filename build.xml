@@ -15,7 +15,9 @@
     <property name="bin.phpdcd"  value="${vendordir}/bin/phpdcd"/>
     <property name="bin.phpdox"  value="${vendordir}/bin/phpdox"/>
     <property name="bin.phpdoc"  value="${vendordir}/bin/phpdoc"/>
+    <property name="bin.phpmetrics"  value="${vendordir}/bin/phpmetrics"/>
     <property name="bin.pdepend" value="${vendordir}/bin/pdepend"/>
+
 
     <property name="config.phpunit" value="${configdir}/phpunit.xml"/>
     <property name="config.phpdox" value="${configdir}/phpdox.xml"/>
@@ -103,6 +105,17 @@
         </exec>
     </target>
 
+    <target name="phpmetrics" depends="prepare">
+        <mkdir dir="${docdir}/phpmetrics"/>
+        <exec executable="${bin.phpmetrics}" logoutput="/dev/stdout">
+            <arg value="--report-html"/><arg path="${docdir}/phpmetrics/index.html"/>
+            <arg value="--report-xml"/><arg path="${builddir}/phpmetrics.xml"/>
+            <arg value="--violations-xml"/><arg path="${builddir}/phpmetrics-violations.xml"/>
+            <arg value="--chart-bubbles"/><arg path="${docdir}/bubbles.svg"/>
+            <arg path="${sourcedir}"/>
+        </exec>
+    </target>
+
     <target name="phpdepend" depends="prepare,phpunit">
         <exec executable="${bin.pdepend}" logoutput="/dev/stdout">
             <arg value="--jdepend-chart=${docdir}/chart.svg"/>
@@ -114,5 +127,5 @@
         </exec>
     </target>
 
-    <target name="build" depends="phpdox,phpcpd,phpdcd,phpdepend"/>
+    <target name="build" depends="phpdox,phpcpd,phpdcd,phpdepend,phpmetrics"/>
 </project>
