@@ -1,11 +1,20 @@
 <?php
+/**
+ * This file contains test cases for the RgbColour class.
+ *
+ * @author    Chris Throup <chris@throup.org.uk>
+ * @copyright 2014 Chris Throup
+ * @licence   GPL-3.0+
+ */
 
 namespace Colourspace;
+
+use PHPUnit_Framework_TestCase;
 
 /**
  * Class RgbColourTest
  */
-class RgbColourTest extends \PHPUnit_Framework_TestCase {
+class RgbColourTest extends PHPUnit_Framework_TestCase {
     /**
      * @test
      */
