@@ -142,18 +142,28 @@ class RgbColour {
      * }
      */
     protected function getXYZ() {
-        $R = $this->applyGamma($this->red);
-        $G = $this->applyGamma($this->green);
-        $B = $this->applyGamma($this->blue);
+        $RGB = new Matrix(
+            [
+                [$this->applyGamma($this->red)],
+                [$this->applyGamma($this->green)],
+                [$this->applyGamma($this->blue)],
+            ]
+        );
 
-        $X = $R * 0.4124 + $G * 0.3576 + $B * 0.1805;
-        $Y = $R * 0.2126 + $G * 0.7152 + $B * 0.0722;
-        $Z = $R * 0.0193 + $G * 0.1192 + $B * 0.9505;
+        $matrix = new Matrix(
+            [
+                [0.4124, 0.3576, 0.1805],
+                [0.2126, 0.7152, 0.0722],
+                [0.0193, 0.1192, 0.9505],
+            ]
+        );
+
+        $XYZ = $matrix->product($RGB);
 
         return [
-            'X' => $X,
-            'Y' => $Y,
-            'Z' => $Z,
+            'X' => $XYZ[0][0],
+            'Y' => $XYZ[1][0],
+            'Z' => $XYZ[2][0],
         ];
     }
 
