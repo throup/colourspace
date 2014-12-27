@@ -90,4 +90,110 @@ class Matrix extends ArrayIterator {
         }
         return new self($data);
     }
+
+    /**
+     * Return the inverse of this matrix.
+     *
+     * Currently only works for 2-square matrices _with no checks for error
+     * conditions_. This may ultimately need to defer to separate classes for
+     * a complete solution.
+     *
+     * @return self
+     * @todo Implement a universal algorithm.
+     */
+    public function inverse() {
+        switch ($this->rows()) {
+            case 2:
+                return $this->invert2();
+
+            case 3:
+                return $this->invert3();
+        }
+
+        $data = [];
+
+        return new self($data);
+    }
+
+    /**
+     * Returns the determinant of this matrix.
+     *
+     * Currently only works for square matrices <= 3x3 _with no checks for
+     * error conditions_. This may ultimately need to defer to separate classes
+     * for a complete solution.
+     *
+     * @return float
+     * @todo Implement a universal algorithm.
+     */
+    public function determinant() {
+        if ($this->rows() === 1 && $this->columns() === 1) {
+            return abs($this[0][0]);
+        } else if ($this->rows() === 2 && $this->columns() === 2) {
+            return $this[0][0] * $this[1][1] - $this[0][1] * $this[1][0];
+        } else {
+            return $this[0][0] * $this[1][1] * $this[2][2]
+                 + $this[0][1] * $this[1][2] * $this[2][0]
+                 + $this[0][2] * $this[1][0] * $this[2][1]
+                 - $this[0][2] * $this[1][1] * $this[2][0]
+                 - $this[0][0] * $this[1][2] * $this[2][1]
+                 - $this[0][1] * $this[1][0] * $this[2][2];
+        }
+    }
+
+    /**
+     * Return the inverse of this matrix.
+     *
+     * This is an internal utility method which should only be user if the
+     * matrix has been confirmed to be an invertible 2x2.
+     *
+     * @return self
+     */
+    protected function invert2() {
+        $data = [];
+        $det = $this->determinant();
+
+        $data[] = [$this[1][1] / $det, 0 - $this[0][1] / $det];
+        $data[] = [0 - $this[1][0] / $det, $this[0][0] / $det];
+        return new self($data);
+    }
+
+    /**
+     * Return the inverse of this matrix.
+     *
+     * This is an internal utility method which should only be user if the
+     * matrix has been confirmed to be an invertible 3x3.
+     *
+     * @return self
+     */
+    protected function invert3() {
+        $det = $this->determinant();
+
+        $a = $this[0][0];
+        $b = $this[0][1];
+        $c = $this[0][2];
+        $d = $this[1][0];
+        $e = $this[1][1];
+        $f = $this[1][2];
+        $g = $this[2][0];
+        $h = $this[2][1];
+        $i = $this[2][2];
+
+        $A = $e * $i - $f * $h;
+        $B = $f * $g - $d * $i;
+        $C = $d * $h - $e * $g;
+        $D = $c * $h - $b * $i;
+        $E = $a * $i - $c * $g;
+        $F = $b * $g - $a * $h;
+        $G = $b * $f - $c * $e;
+        $H = $c * $d - $e * $f;
+        $I = $a * $e - $b * $d;
+
+        $data = [
+            [$A / $det, $D / $det, $G / $det],
+            [$B / $det, $E / $det, $H / $det],
+            [$C / $det, $F / $det, $I / $det],
+        ];
+
+        return new self($data);
+    }
 }

@@ -285,4 +285,229 @@ class MatrixTest extends PHPUnit_Framework_TestCase {
 
         $this->assertEquals($expected, $result);
     }
+
+    /**
+     * @test
+     */
+    public function inverseOf2x2IdentityMatrix_returnsEqualMatrix() {
+        $identity = new Matrix(
+            [
+                [1, 0],
+                [0, 1],
+            ]
+        );
+
+        $result = $identity->inverse();
+
+        $this->assertEquals($identity, $result);
+    }
+
+    /**
+     * @test
+     */
+    public function inverseOf2x2Matrix_returnsExpectedValue() {
+        $matrix = new Matrix(
+            [
+                [1, 2],
+                [3, 4],
+            ]
+        );
+
+        $expected = new Matrix(
+            [
+                [-2.0,  1.0],
+                [ 1.5, -0.5],
+            ]
+        );
+
+        $result = $matrix->inverse();
+
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
+     * @test
+     */
+    public function inverseOf3x3IdentityMatrix_returnsEqualMatrix() {
+        $identity = new Matrix(
+            [
+                [1, 0, 0],
+                [0, 1, 0],
+                [0, 0, 1],
+            ]
+        );
+
+        $result = $identity->inverse();
+
+        $this->assertEquals($identity, $result);
+    }
+
+    /**
+     * @test
+     */
+    public function inverseOf3x3Matrix_returnsExpectedValue() {
+        $matrix = new Matrix(
+            [
+                [1, 0, 2],
+                [0, 3, 0],
+                [4, 0, 5],
+            ]
+        );
+
+        $expected = new Matrix(
+            [
+                [-15/9,  0,   6/9],
+                [  0,    3/9, 0  ],
+                [ 12/9,  0,  -3/9],
+            ]
+        );
+
+        $result = $matrix->inverse();
+
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
+     * @test
+     */
+    public function determinantOf1x1IdentityMatrix_returnsExpectedValue() {
+        $matrix = new Matrix(
+            [
+                [1],
+            ]
+        );
+
+        $expected = 1;
+
+        $this->assertEquals($expected, $matrix->determinant());
+    }
+
+    /**
+     * @test
+     */
+    public function determinantOfPositive1x1Matrix_returnsExpectedValue() {
+        $matrix = new Matrix(
+            [
+                [4],
+            ]
+        );
+
+        $expected = 4;
+
+        $this->assertEquals($expected, $matrix->determinant());
+    }
+
+    /**
+     * @test
+     */
+    public function determinantOfNegative1x1Matrix_returnsExpectedValue() {
+        $matrix = new Matrix(
+            [
+                [-7],
+            ]
+        );
+
+        $expected = 7;
+
+        $this->assertEquals($expected, $matrix->determinant());
+    }
+
+    /**
+     * @test
+     */
+    public function determinantOf2x2IdentityMatrix_returnsExpectedValue() {
+        $matrix = new Matrix(
+            [
+                [1, 0],
+                [0, 1],
+            ]
+        );
+
+        $expected = 1;
+
+        $this->assertEquals($expected, $matrix->determinant());
+    }
+
+    /**
+     * @test
+     */
+    public function determinantOfPositive2x2Matrix_returnsExpectedValue() {
+        $matrix = new Matrix(
+            [
+                [ 1,  2],
+                [-2, -1],
+            ]
+        );
+
+        $expected = 3;
+
+        $this->assertEquals($expected, $matrix->determinant());
+    }
+
+    /**
+     * @test
+     */
+    public function determinantOfNegative2x2Matrix_returnsExpectedValue() {
+        $matrix = new Matrix(
+            [
+                [1, 2],
+                [3, 4],
+            ]
+        );
+
+        $expected = -2;
+
+        $this->assertEquals($expected, $matrix->determinant());
+    }
+
+    /**
+     * @test
+     */
+    public function determinantOf3x3IdentityMatrix_returnsExpectedValue() {
+        $matrix = new Matrix(
+            [
+                [1, 0, 0],
+                [0, 1, 0],
+                [0, 0, 1],
+            ]
+        );
+
+        $expected = 1;
+
+        $this->assertEquals($expected, $matrix->determinant());
+    }
+
+    /**
+     * @test
+     */
+    public function determinantOfPositive3x3Matrix_returnsExpectedValue() {
+        $matrix = new Matrix(
+            [
+                [-2,  2, -3],
+                [-1,  1,  3],
+                [ 2,  0, -1]
+            ]
+        );
+
+        $expected = 18;
+
+        $this->assertEquals($expected, $matrix->determinant());
+    }
+
+    /**
+     * @test
+     */
+    public function determinantOfNegative3x3Matrix_returnsExpectedValue() {
+        $matrix = new Matrix(
+            [
+                [1, 0, 2],
+                [0, 3, 0],
+                [4, 0, 5],
+            ]
+        );
+
+        $expected = -9;
+
+        $this->assertEquals($expected, $matrix->determinant());
+    }
 }
