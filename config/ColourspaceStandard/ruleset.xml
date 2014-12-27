@@ -56,7 +56,6 @@
     <rule ref="PEAR.Functions.ValidDefaultValue"/>
     <rule ref="PEAR.WhiteSpace.ObjectOperatorIndent"/>
     <rule ref="PEAR.WhiteSpace.ScopeClosingBrace"/>
-    <rule ref="PEAR.WhiteSpace.ScopeIndent"/>
 
     <rule ref="PSR1.Classes.ClassDeclaration"/>
     <rule ref="PSR1.Files.SideEffects"/>
@@ -90,7 +89,6 @@
     <rule ref="Squiz.ControlStructures.ForLoopDeclaration"/>
     <rule ref="Squiz.ControlStructures.InlineIfDeclaration"/>
     <rule ref="Squiz.ControlStructures.LowercaseDeclaration"/>
-    <rule ref="Squiz.ControlStructures.SwitchDeclaration"/>
     <rule ref="Squiz.CSS.ClassDefinitionClosingBraceSpace"/>
     <rule ref="Squiz.CSS.ClassDefinitionNameSpacing"/>
     <rule ref="Squiz.CSS.ClassDefinitionOpeningBraceSpace"/>
