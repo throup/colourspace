@@ -15,6 +15,11 @@ use PHPUnit_Framework_TestCase;
  * Class RgbColourTest
  */
 class RgbColourTest extends PHPUnit_Framework_TestCase {
+    const RED_X = 0.412423758;
+    const RED_Y = 0.212656;
+    const RED_Z = 0.019332364;
+    const DELTA = 0.00005;
+
     /**
      * @test
      */
@@ -57,11 +62,11 @@ class RgbColourTest extends PHPUnit_Framework_TestCase {
      */
     public function getX_returnsExpectedValues() {
         $R = 1.0;    $G = 0.0;    $B = 0.0;
-        $X = 0.4124;
+        $X = self::RED_X;
 
         $colour = $this->generateRgbColour($R, $G, $B);
 
-        $this->assertEquals($X, $colour->getX());
+        $this->assertEquals($X, $colour->getX(), '', self::DELTA);
     }
 
     /**
@@ -69,11 +74,11 @@ class RgbColourTest extends PHPUnit_Framework_TestCase {
      */
     public function getY_returnsExpectedValues() {
         $R = 1.0;    $G = 0.0;    $B = 0.0;
-        $Y = 0.2126;
+        $Y = self::RED_Y;
 
         $colour = $this->generateRgbColour($R, $G, $B);
 
-        $this->assertEquals($Y, $colour->getY());
+        $this->assertEquals($Y, $colour->getY(), '', self::DELTA);
     }
 
     /**
@@ -81,11 +86,11 @@ class RgbColourTest extends PHPUnit_Framework_TestCase {
      */
     public function getZ_returnsExpectedValues() {
         $R = 1.0;    $G = 0.0;    $B = 0.0;
-        $Z = 0.0193;
+        $Z = self::RED_Z;
 
         $colour = $this->generateRgbColour($R, $G, $B);
 
-        $this->assertEquals($Z, $colour->getZ());
+        $this->assertEquals($Z, $colour->getZ(), '', self::DELTA);
     }
 
     /**
