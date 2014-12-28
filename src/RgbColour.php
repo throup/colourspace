@@ -12,7 +12,7 @@ namespace Colourspace;
 /**
  * Represents a colour in an RGB colourspace
  */
-class RgbColour {
+class RgbColour implements Colour {
     /**
      * Instantiate a colour for the provided RGB representation.
      *
@@ -30,71 +30,17 @@ class RgbColour {
     }
 
     /**
-     * Gets the red component of this colour's RGB representation; in the
-     * range [0.0–1.0].
-     *
-     * @return float
-     */
-    public function getRed() {
-        return (float) $this->red;
-    }
-
-    /**
-     * Gets the green component of this colour's RGB representation; in the
-     * range [0.0–1.0].
-     *
-     * @return float
-     */
-    public function getGreen() {
-        return (float) $this->green;
-    }
-
-    /**
-     * Gets the blue component of this colour's RGB representation; in the
-     * range [0.0–1.0].
-     *
-     * @return float
-     */
-    public function getBlue() {
-        return (float) $this->blue;
-    }
-
-    /**
      * Determine if this colour is equal to another.
      *
-     * @param self $second The other colour to which this one will be compared.
+     * @param Colour $second The colour to which this one will be compared.
      *
      * @return bool
      */
-    public function equals(self $second) {
+    public function equals(Colour $second) {
         return ($this->getRed()   == $second->getRed())
-            && ($this->getGreen() == $second->getGreen())
-            && ($this->getBlue()  == $second->getBlue());
+               && ($this->getGreen() == $second->getGreen())
+               && ($this->getBlue()  == $second->getBlue());
     }
-
-    /**
-     * The red component of this colour's RGB representation; in the
-     * range [0.0–1.0].
-     *
-     * @var float
-     */
-    private $red   = 0.0;
-
-    /**
-     * The green component of this colour's RGB representation; in the
-     * range [0.0–1.0].
-     *
-     * @var float
-     */
-    private $green = 0.0;
-
-    /**
-     * The blue component of this colour's RGB representation; in the
-     * range [0.0–1.0].
-     *
-     * @var float
-     */
-    private $blue  = 0.0;
 
     /**
      * Gets the X component of this colour's XYZ representation; in
@@ -127,6 +73,36 @@ class RgbColour {
     public function getZ() {
         $XYZ = $this->getXYZ();
         return $XYZ['Z'];
+    }
+
+    /**
+     * Gets the red component of this colour's RGB representation; in the
+     * range [0.0–1.0].
+     *
+     * @return float
+     */
+    public function getRed() {
+        return (float) $this->red;
+    }
+
+    /**
+     * Gets the green component of this colour's RGB representation; in the
+     * range [0.0–1.0].
+     *
+     * @return float
+     */
+    public function getGreen() {
+        return (float) $this->green;
+    }
+
+    /**
+     * Gets the blue component of this colour's RGB representation; in the
+     * range [0.0–1.0].
+     *
+     * @return float
+     */
+    public function getBlue() {
+        return (float) $this->blue;
     }
 
     /**
@@ -186,4 +162,28 @@ class RgbColour {
         }
         return $output;
     }
+
+    /**
+     * The red component of this colour's RGB representation; in the
+     * range [0.0–1.0].
+     *
+     * @var float
+     */
+    private $red   = 0.0;
+
+    /**
+     * The green component of this colour's RGB representation; in the
+     * range [0.0–1.0].
+     *
+     * @var float
+     */
+    private $green = 0.0;
+
+    /**
+     * The blue component of this colour's RGB representation; in the
+     * range [0.0–1.0].
+     *
+     * @var float
+     */
+    private $blue  = 0.0;
 }

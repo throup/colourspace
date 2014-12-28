@@ -12,7 +12,7 @@ namespace Colourspace;
 /**
  * Represents a colour in an XYZ colourspace
  */
-class XyzColour {
+class XyzColour implements Colour {
     /**
      * Instantiate a colour for the provided XYZ representation.
      *
@@ -27,6 +27,19 @@ class XyzColour {
         $this->X = (float) $X;
         $this->Y = (float) $Y;
         $this->Z = (float) $Z;
+    }
+
+    /**
+     * Determine if this colour is equal to another.
+     *
+     * @param Colour $second The colour to which this one will be compared.
+     *
+     * @return bool
+     */
+    public function equals(Colour $second) {
+        return ($this->getX() == $second->getX())
+            && ($this->getY() == $second->getY())
+            && ($this->getZ() == $second->getZ());
     }
 
     /**
@@ -58,43 +71,6 @@ class XyzColour {
     public function getZ() {
         return (float) $this->Z;
     }
-
-    /**
-     * Determine if this colour is equal to another.
-     *
-     * @param self $second The other colour to which this one will be compared.
-     *
-     * @return bool
-     */
-    public function equals(self $second) {
-        return ($this->getX() == $second->getX())
-            && ($this->getY() == $second->getY())
-            && ($this->getZ() == $second->getZ());
-    }
-
-    /**
-     * The X component of this colour's XYZ representation; in the
-     * range [0.0–1.0].
-     *
-     * @var float
-     */
-    private $X   = 0.0;
-
-    /**
-     * The Y component of this colour's XYZ representation; in the
-     * range [0.0–1.0].
-     *
-     * @var float
-     */
-    private $Y = 0.0;
-
-    /**
-     * The Z component of this colour's XYZ representation; in the
-     * range [0.0–1.0].
-     *
-     * @var float
-     */
-    private $Z  = 0.0;
 
     /**
      * Gets the red component of this colour's RGB representation; in
@@ -186,4 +162,28 @@ class XyzColour {
         }
         return $output;
     }
+
+    /**
+     * The X component of this colour's XYZ representation; in the
+     * range [0.0–1.0].
+     *
+     * @var float
+     */
+    private $X   = 0.0;
+
+    /**
+     * The Y component of this colour's XYZ representation; in the
+     * range [0.0–1.0].
+     *
+     * @var float
+     */
+    private $Y = 0.0;
+
+    /**
+     * The Z component of this colour's XYZ representation; in the
+     * range [0.0–1.0].
+     *
+     * @var float
+     */
+    private $Z  = 0.0;
 }
