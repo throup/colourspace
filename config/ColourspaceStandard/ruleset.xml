@@ -47,7 +47,6 @@
     <rule ref="Generic.WhiteSpace.DisallowTabIndent"/>
     <rule ref="Generic.WhiteSpace.ScopeIndent"/>
 
-    <rule ref="PEAR.Commenting.FunctionComment"/>
     <rule ref="PEAR.Commenting.InlineComment"/>
     <rule ref="PEAR.ControlStructures.ControlSignature"/>
     <rule ref="PEAR.ControlStructures.MultiLineCondition"/>
@@ -117,12 +116,10 @@
     <rule ref="Squiz.Objects.DisallowObjectStringIndex"/>
     <rule ref="Squiz.Objects.ObjectInstantiation"/>
     <rule ref="Squiz.Objects.ObjectMemberComma"/>
-    <rule ref="Squiz.Operators.ComparisonOperatorUsage"/>
     <rule ref="Squiz.Operators.IncrementDecrementUsage"/>
     <rule ref="Squiz.Operators.ValidLogicalOperators"/>
     <rule ref="Squiz.PHP.CommentedOutCode"/>
     <rule ref="Squiz.PHP.DisallowComparisonAssignment"/>
-    <rule ref="Squiz.PHP.DisallowInlineIf"/>
     <rule ref="Squiz.PHP.DisallowMultipleAssignments"/>
     <rule ref="Squiz.PHP.DisallowObEndFlush"/>
     <rule ref="Squiz.PHP.DisallowSizeFunctionsInLoops"/>

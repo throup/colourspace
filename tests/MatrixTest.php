@@ -328,6 +328,30 @@ class MatrixTest extends PHPUnit_Framework_TestCase {
     /**
      * @test
      */
+    public function inverseOf2x2Matrix_asProductWithselfGivesIdentity() {
+        $matrix = new Matrix(
+            [
+                [1, 2],
+                [3, 4],
+            ]
+        );
+
+        $inverse = $matrix->inverse();
+
+        $identity = new Matrix(
+            [
+                [1, 0],
+                [0, 1],
+            ]
+        );
+
+        $this->assertEquals($identity, $matrix->product($inverse));
+        $this->assertEquals($identity, $inverse->product($matrix));
+    }
+
+    /**
+     * @test
+     */
     public function inverseOf3x3IdentityMatrix_returnsEqualMatrix() {
         $identity = new Matrix(
             [
@@ -370,6 +394,32 @@ class MatrixTest extends PHPUnit_Framework_TestCase {
     /**
      * @test
      */
+    public function inverseOf3x3Matrix_asProductWithselfGivesIdentity() {
+        $matrix = new Matrix(
+            [
+                [1, 0, 2],
+                [0, 3, 0],
+                [4, 0, 5],
+            ]
+        );
+
+        $inverse = $matrix->inverse();
+
+        $identity = new Matrix(
+            [
+                [1, 0, 0],
+                [0, 1, 0],
+                [0, 0, 1],
+            ]
+        );
+
+        $this->assertEquals($identity, $matrix->product($inverse));
+        $this->assertEquals($identity, $inverse->product($matrix));
+    }
+
+    /**
+     * @test
+     */
     public function determinantOf1x1IdentityMatrix_returnsExpectedValue() {
         $matrix = new Matrix(
             [
@@ -407,7 +457,7 @@ class MatrixTest extends PHPUnit_Framework_TestCase {
             ]
         );
 
-        $expected = 7;
+        $expected = -7;
 
         $this->assertEquals($expected, $matrix->determinant());
     }
@@ -518,6 +568,15 @@ class MatrixTest extends PHPUnit_Framework_TestCase {
     public function determinantOfNonSquareMatrix_throwsException() {
         $matrix = $this->exampleNonSquareMatrix();
         $matrix->determinant();
+    }
+
+    /**
+     * @test
+     * @expectedException \Colourspace\Exception
+     */
+    public function inverseOfNonSquareMatrix_throwsException() {
+        $matrix = $this->exampleNonSquareMatrix();
+        $matrix->inverse();
     }
 
     /**
