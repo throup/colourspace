@@ -510,4 +510,54 @@ class MatrixTest extends PHPUnit_Framework_TestCase {
 
         $this->assertEquals($expected, $matrix->determinant());
     }
+
+    /**
+     * @test
+     * @expectedException \Colourspace\Exception
+     */
+    public function determinantOfNonSquareMatrix_throwsException() {
+        $matrix = $this->exampleNonSquareMatrix();
+        $matrix->determinant();
+    }
+
+    /**
+     * @test
+     */
+    public function isSquare_returnsTrueForSquareMatrix() {
+        $matrix = $this->exampleSquareMatrix();
+        $this->assertTrue($matrix->isSquare());
+    }
+
+    /**
+     * @test
+     */
+    public function isSquare_returnsFalseForNonSquareMatrix() {
+        $matrix = $this->exampleNonSquareMatrix();
+        $this->assertFalse($matrix->isSquare());
+    }
+
+    /**
+     * @return Matrix
+     */
+    protected function exampleNonSquareMatrix() {
+        return new Matrix(
+            [
+                [1, 2, 3],
+                [4, 5, 6],
+            ]
+        );
+    }
+
+    /**
+     * @return Matrix
+     */
+    protected function exampleSquareMatrix() {
+        return new Matrix(
+            [
+                [1, 2],
+                [3, 4],
+            ]
+        );
+    }
 }
+

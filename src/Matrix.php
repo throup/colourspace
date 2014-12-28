@@ -50,6 +50,16 @@ class Matrix extends ArrayIterator {
     }
 
     /**
+     * Is this a square matrix? That is, does it have an equal number of rows
+     * and columns?
+     *
+     * @return bool
+     */
+    public function isSquare() {
+        return $this->rows() === $this->columns();
+    }
+
+    /**
      * The number of rows within this matrix.
      *
      * @return int
@@ -102,17 +112,11 @@ class Matrix extends ArrayIterator {
      * @todo Implement a universal algorithm.
      */
     public function inverse() {
-        switch ($this->rows()) {
-            case 2:
-                return $this->invert2();
-
-            case 3:
-                return $this->invert3();
+        if ($this->rows() === 2) {
+            return $this->invert2();
+        } else {
+            return $this->invert3();
         }
-
-        $data = [];
-
-        return new self($data);
     }
 
     /**
@@ -126,24 +130,29 @@ class Matrix extends ArrayIterator {
      * @todo Implement a universal algorithm.
      */
     public function determinant() {
-        if ($this->rows() === 1 && $this->columns() === 1) {
+        if (!$this->isSquare()) {
+            throw new Exception();
+        }
+
+        $n = $this->rows();
+        if ($n === 1) {
             return abs($this[0][0]);
-        } else if ($this->rows() === 2 && $this->columns() === 2) {
+        } else if ($n === 2) {
             return $this[0][0] * $this[1][1] - $this[0][1] * $this[1][0];
         } else {
-            return $this[0][0] * $this[1][1] * $this[2][2]
-                 + $this[0][1] * $this[1][2] * $this[2][0]
-                 + $this[0][2] * $this[1][0] * $this[2][1]
-                 - $this[0][2] * $this[1][1] * $this[2][0]
-                 - $this[0][0] * $this[1][2] * $this[2][1]
-                 - $this[0][1] * $this[1][0] * $this[2][2];
+            $det = 0;
+            for ($i = 0; $i < $n; $i++) {
+                $sign = ($i % 2) ? -1 : 1;
+                $det += $sign * $this[0][$i] * $this->cofactor(0, $i);
+            }
+            return $det;
         }
     }
 
     /**
      * Return the inverse of this matrix.
      *
-     * This is an internal utility method which should only be user if the
+     * This is an internal utility method which should only be used if the
      * matrix has been confirmed to be an invertible 2x2.
      *
      * @return self
@@ -160,7 +169,7 @@ class Matrix extends ArrayIterator {
     /**
      * Return the inverse of this matrix.
      *
-     * This is an internal utility method which should only be user if the
+     * This is an internal utility method which should only be used if the
      * matrix has been confirmed to be an invertible 3x3.
      *
      * @return self
@@ -168,25 +177,15 @@ class Matrix extends ArrayIterator {
     protected function invert3() {
         $det = $this->determinant();
 
-        $a = $this[0][0];
-        $b = $this[0][1];
-        $c = $this[0][2];
-        $d = $this[1][0];
-        $e = $this[1][1];
-        $f = $this[1][2];
-        $g = $this[2][0];
-        $h = $this[2][1];
-        $i = $this[2][2];
-
-        $A = $e * $i - $f * $h;
-        $B = $f * $g - $d * $i;
-        $C = $d * $h - $e * $g;
-        $D = $c * $h - $b * $i;
-        $E = $a * $i - $c * $g;
-        $F = $b * $g - $a * $h;
-        $G = $b * $f - $c * $e;
-        $H = $c * $d - $e * $f;
-        $I = $a * $e - $b * $d;
+        $A = $this->cofactor(0, 0);
+        $B = $this->cofactor(0, 1);
+        $C = $this->cofactor(0, 2);
+        $D = $this->cofactor(1, 0);
+        $E = $this->cofactor(1, 1);
+        $F = $this->cofactor(1, 2);
+        $G = $this->cofactor(2, 0);
+        $H = $this->cofactor(2, 1);
+        $I = $this->cofactor(2, 2);
 
         $data = [
             [$A / $det, $D / $det, $G / $det],
@@ -194,6 +193,34 @@ class Matrix extends ArrayIterator {
             [$C / $det, $F / $det, $I / $det],
         ];
 
+        return new self($data);
+    }
+
+    /**
+     * @param int $row
+     * @param int $column
+     * @return float
+     * @todo Explicit unit tests as this is a public method.
+     */
+    public function cofactor($row, $column) {
+        $submatrix = $this->submatrix($row, $column);
+        return $submatrix->determinant();
+    }
+
+    /**
+     * @param int $row
+     * @param int $column
+     * @return self
+     * @todo Explicit unit tests as this is a public method.
+     */
+    public function submatrix($row, $column) {
+        $data = [];
+        foreach($this as $i => $arow) {
+            if ($i !== $row) {
+                unset($arow[$column]);
+                $data[] = array_values($arow);
+            }
+        }
         return new self($data);
     }
 }
