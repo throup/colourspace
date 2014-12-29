@@ -12,7 +12,7 @@ namespace Colourspace;
 /**
  * Represents a colour in an XYZ colourspace
  */
-class XyzColour implements Colour {
+class XyzColour extends BaseColour {
     /**
      * Instantiate a colour for the provided XYZ representation.
      *
@@ -126,13 +126,7 @@ class XyzColour implements Colour {
             ]
         );
 
-        $matrix = new Matrix(
-            [
-                [ 3.2404542, -1.5371385, -0.4985314],
-                [-0.9692660,  1.8760108,  0.0415560],
-                [ 0.0556434, -0.2040259,  1.0572252],
-            ]
-        );
+        $matrix = $this->sRGBinverseMatrix();
 
         $RGB = $matrix->product($XYZ);
 
