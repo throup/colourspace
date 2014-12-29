@@ -596,6 +596,32 @@ class MatrixTest extends PHPUnit_Framework_TestCase {
     }
 
     /**
+     * @test
+     */
+    public function submatrix_given4x4Matrix_returnsExpectedSubmatrix() {
+        $matrix = new Matrix(
+            [
+                [ 1,  2,  3,  4],
+                [ 5,  6,  7,  8],
+                [ 9, 10, 11, 12],
+                [13, 14, 15, 16],
+            ]
+        );
+
+        $expected = new Matrix(
+            [
+                [ 1,  2,  4],
+                [ 9, 10, 12],
+                [13, 14, 16],
+            ]
+        );
+
+        $result = $matrix->submatrix(1, 2);
+
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
      * @return Matrix
      */
     protected function exampleNonSquareMatrix() {
