@@ -7,7 +7,7 @@
  * @licence   GPL-3.0+
  */
 
-namespace Colourspace;
+namespace Colourspace\Matrix;
 
 use PHPUnit_Framework_TestCase;
 

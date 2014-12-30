@@ -7,10 +7,11 @@
  * @licence   GPL-3.0+
  */
 
-namespace Colourspace;
+namespace Colourspace\Matrix;
 
 use ArrayAccess;
 use ArrayIterator;
+use Colourspace\Exception;
 use Traversable;
 
 /**

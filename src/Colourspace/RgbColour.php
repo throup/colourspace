@@ -7,7 +7,9 @@
  * @licence   GPL-3.0+
  */
 
-namespace Colourspace;
+namespace Colourspace\Colourspace;
+
+use Colourspace\Matrix\Matrix;
 
 /**
  * Represents a colour in an RGB colourspace
