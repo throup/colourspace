@@ -89,6 +89,7 @@ class Matrix extends ArrayIterator {
      * @param self $second The matrix by which this will be multiplied.
      *
      * @return self
+     * @throw Exception
      */
     public function product(self $second) {
         $rows = $second->rows();

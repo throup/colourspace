@@ -288,6 +288,15 @@ class MatrixTest extends PHPUnit_Framework_TestCase {
 
     /**
      * @test
+     * @expectedException \Colourspace\Exception
+     */
+    public function productOfMismatchedMatrices_throwsException() {
+        $matrix = $this->exampleNonSquareMatrix();
+        $matrix->product($this->exampleSquareMatrix());
+    }
+
+    /**
+     * @test
      */
     public function inverseOf2x2IdentityMatrix_returnsEqualMatrix() {
         $identity = new Matrix(
