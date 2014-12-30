@@ -128,7 +128,7 @@ class Matrix extends ArrayIterator {
         for ($i = 0; $i < $n; $i++) {
             $data[$i] = [];
             for ($j = 0; $j < $n; $j++) {
-                $data[$i][$j] = $this->cofactor($j, $i) / $det;
+                $data[$i][$j] = $this->cofactor($j + 1, $i + 1) / $det;
             }
         }
 
@@ -152,7 +152,7 @@ class Matrix extends ArrayIterator {
         } else {
             $det = 0;
             for ($i = 0; $i < $n; $i++) {
-                $det += $this[0][$i] * $this->cofactor(0, $i);
+                $det += $this[0][$i] * $this->cofactor(1, $i + 1);
             }
             return $det;
         }
@@ -184,13 +184,12 @@ class Matrix extends ArrayIterator {
      * @param int $column The column to remove.
      *
      * @return self
-     * @todo Explicit unit tests as this is a public method.
      */
     public function submatrix($row, $column) {
         $data = [];
         foreach ($this as $i => $arow) {
-            if ($i !== $row) {
-                unset($arow[$column]);
+            if ($i !== $row - 1) {
+                unset($arow[$column - 1]);
                 $data[] = array_values($arow);
             }
         }
@@ -207,5 +206,17 @@ class Matrix extends ArrayIterator {
         if (!$this->isSquare()) {
             throw new Exception();
         }
+    }
+
+    /**
+     * Returns the entry found at the intersection of the given row and column.
+     *
+     * @param int $row The row in which the entry is found.
+     * @param int $col The column in which the entry is found.
+     *
+     * @return float
+     */
+    public function entry($row, $col) {
+        return $this[$row - 1][$col - 1];
     }
 }

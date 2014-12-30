@@ -625,9 +625,47 @@ class MatrixTest extends PHPUnit_Framework_TestCase {
             ]
         );
 
-        $result = $matrix->submatrix(1, 2);
+        $result = $matrix->submatrix(2, 3);
 
         $this->assertEquals($expected, $result);
+    }
+
+    /**
+     * @test
+     */
+    public function submatrix_given2x3Matrix_returnsExpectedSubmatrix() {
+        $matrix = new Matrix(
+            [
+                [ 1,  2,  3],
+                [ 4,  5,  6],
+            ]
+        );
+
+        $expected = new Matrix(
+            [
+                [ 1,  3],
+            ]
+        );
+
+        $result = $matrix->submatrix(2, 2);
+
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
+     * @test
+     */
+    public function entry_returnsCorrectValue() {
+        $matrix = new Matrix(
+            [
+                [ 1,  2,  3,  4],
+                [ 5,  6,  7,  8],
+                [ 9, 10, 11, 12],
+                [13, 14, 15, 16],
+            ]
+        );
+
+        $this->assertEquals(7, $matrix->entry(2, 3));
     }
 
     /**
