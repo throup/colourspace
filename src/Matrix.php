@@ -75,7 +75,11 @@ class Matrix extends ArrayIterator {
      */
     public function columns() {
         $row = reset($this);
-        return count($row);
+        if ($row) {
+            return count($row);
+        } else {
+            return 0;
+        }
     }
 
     /**
@@ -88,6 +92,10 @@ class Matrix extends ArrayIterator {
      */
     public function product(self $second) {
         $rows = $second->rows();
+        if ($this->columns() !== $rows) {
+            throw new Exception();
+        }
+
         $cols = $second->columns();
         $data = [];
         for ($i = 0; $i < $rows; $i++) {
