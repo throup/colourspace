@@ -17,6 +17,7 @@
     <property name="bin.phpdoc"  value="${vendordir}/bin/phpdoc"/>
     <property name="bin.phpmetrics"  value="${vendordir}/bin/phpmetrics"/>
     <property name="bin.pdepend" value="${vendordir}/bin/pdepend"/>
+    <property name="bin.codebrowser" value="${vendordir}/bin/phpcb"/>
 
 
     <property name="config.phpunit" value="${configdir}/phpunit.xml"/>
@@ -127,5 +128,13 @@
         </exec>
     </target>
 
-    <target name="build" depends="phpdox,phpcpd,phpdcd,phpdepend,phpmetrics"/>
+    <target name="codebrowser" depends="codesniffer,phpmetrics,phpmd">
+        <exec executable="${bin.codebrowser}" logoutput="/dev/stdout">
+            <arg value="-s"/><arg path="${sourcedir}"/>
+            <arg value="-l"/><arg path="${builddir}"/>
+            <arg value="-o"/><arg path="${docdir}/codebrowser"/>
+        </exec>
+    </target>
+
+    <target name="build" depends="phpdox,phpcpd,phpdcd,phpdepend,phpmetrics,codebrowser"/>
 </project>
