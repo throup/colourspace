@@ -18,7 +18,7 @@ class RgbColourTest extends PHPUnit_Framework_TestCase {
     const RED_X = 0.412423758;
     const RED_Y = 0.212656;
     const RED_Z = 0.019332364;
-    const DELTA = 0.00005;
+    const DELTA = 0.0003;
 
     /**
      * @test

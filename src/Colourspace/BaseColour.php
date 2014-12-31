@@ -62,17 +62,16 @@ abstract class BaseColour implements Colour {
      * @return Matrix
      */
     protected function referenceWhite() {
-        $x = 0.31271;
-        $y = 0.32902;
-        $Y = 1;
-        $W = new Matrix(
+        $factory = new StandardIlluminantFactory();
+        $illuminant = $factory->D(65);
+
+        return new Matrix(
             [
-                [$Y * $x / $y],
-                [$Y],
-                [$Y * (1 - $x - $y) / $y,]
+                [$illuminant->getX()],
+                [$illuminant->getY()],
+                [$illuminant->getZ()],
             ]
         );
-        return $W;
     }
 
     /**
