@@ -85,7 +85,7 @@
     </target>
 
     <target name="phpdcd">
-        <exec executable="${bin.phpdcd}" logoutput="${docdir}/phpdcd.txt">
+        <exec executable="${bin.phpdcd}" output="${docdir}/phpdcd.txt">
             <arg path="${sourcedir}"/>
         </exec>
     </target>
