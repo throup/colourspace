@@ -28,11 +28,8 @@ class StandardIlluminantFactory {
            + 2.967800 * pow(10, 6) / pow($T, 2)
            - 4.607000 * pow(10, 9) / pow($T, 3);
         $y = 2.870 * $x - 3.000 * pow($x, 2) - 0.275;
-
         $Y = 1;
-        $X = $Y * $x / $y;
-        $Z = $Y * (1 - $x - $y) / $y;
 
-        return new XyzColour($X, $Y, $Z);
+        return new xyYColour($x, $y, $Y);
     }
 }

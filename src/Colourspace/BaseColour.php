@@ -78,50 +78,41 @@ abstract class BaseColour implements Colour {
      * @return Matrix
      */
     protected function primaryRed() {
-        $x = 0.6400;
-        $y = 0.3300;
-        $Y = 0.212656;
-        $R = new Matrix(
+        $colour = new xyYColour(0.6400, 0.3300, 0.212656);
+        return new Matrix(
             [
-                [$Y * $x / $y],
-                [$Y],
-                [$Y * (1 - $x - $y) / $y,]
+                [$colour->getX()],
+                [$colour->getY()],
+                [$colour->getZ()],
             ]
         );
-        return $R;
     }
 
     /**
      * @return Matrix
      */
     protected function primaryGreen() {
-        $x = 0.3000;
-        $y = 0.6000;
-        $Y = 0.715158;
-        $G = new Matrix(
+        $colour = new xyYColour(0.3000, 0.6000, 0.715158);
+        return new Matrix(
             [
-                [$Y * $x / $y],
-                [$Y],
-                [$Y * (1 - $x - $y) / $y,]
+                [$colour->getX()],
+                [$colour->getY()],
+                [$colour->getZ()],
             ]
         );
-        return $G;
     }
 
     /**
      * @return Matrix
      */
     protected function primaryBlue() {
-        $x = 0.1500;
-        $y = 0.0600;
-        $Y = 0.072186;
-        $B = new Matrix(
+        $colour = new xyYColour(0.1500, 0.0600, 0.072186);
+        return new Matrix(
             [
-                [$Y * $x / $y],
-                [$Y],
-                [$Y * (1 - $x - $y) / $y,]
+                [$colour->getX()],
+                [$colour->getY()],
+                [$colour->getZ()],
             ]
         );
-        return $B;
     }
 }
