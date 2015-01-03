@@ -32,4 +32,13 @@ class StandardIlluminantFactory {
 
         return new xyYColour($x, $y, $Y);
     }
+
+    /**
+     * Create the CIE E illuminant.
+     *
+     * @return Colour
+     */
+    public function E() {
+        return new xyYColour(1/3, 1/3, 1);
+    }
 }

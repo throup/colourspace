@@ -57,4 +57,27 @@ class StandardIlluminantFactoryTest extends PHPUnit_Framework_TestCase {
             [75, 0.94972, 1.00000, 1.22638],
         ];
     }
+
+    /**
+     * @test
+     */
+    public function EReturnsImplementationOfColour() {
+        $factory = new StandardIlluminantFactory();
+        $illuminant = $factory->E();
+        $f = function(Colour $colour) {
+            $colour;
+        };
+        $f($illuminant);
+    }
+
+    /**
+     * @test
+     */
+    public function EMatchesDefinedStandard() {
+        $factory = new StandardIlluminantFactory();
+        $illuminant = $factory->E();
+        $this->assertEquals(1, $illuminant->getX(), '', self::DELTA);
+        $this->assertEquals(1, $illuminant->getY(), '', self::DELTA);
+        $this->assertEquals(1, $illuminant->getZ(), '', self::DELTA);
+    }
 }
