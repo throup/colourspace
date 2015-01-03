@@ -3,7 +3,7 @@
  * This file contains test cases for the StandardIlluminantFactory class.
  *
  * @author    Chris Throup <chris@throup.org.uk>
- * @copyright 2014 Chris Throup
+ * @copyright 2014-2015 Chris Throup
  * @licence   GPL-3.0+
  */
 
