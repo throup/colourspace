@@ -1,6 +1,23 @@
 <?php
 /**
- * This file contains the BaseColour class.
+ * Colourspace
+ * ===========
+ * Library to aid the manipulation of colours within different colour spaces
+ *
+ * Copyright (C) 2014-2015 Chris Throup
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  * @author    Chris Throup <chris@throup.org.uk>
  * @copyright 2014-2015 Chris Throup
@@ -78,7 +95,7 @@ abstract class BaseColour implements Colour {
      * @return Matrix
      */
     protected function primaryRed() {
-        $colour = new xyYColour(0.6400, 0.3300, 0.212656);
+        $colour = new xyYColour(0.6400, 0.3300, 1);
         return new Matrix(
             [
                 [$colour->getX()],
@@ -92,7 +109,7 @@ abstract class BaseColour implements Colour {
      * @return Matrix
      */
     protected function primaryGreen() {
-        $colour = new xyYColour(0.3000, 0.6000, 0.715158);
+        $colour = new xyYColour(0.3000, 0.6000, 1);
         return new Matrix(
             [
                 [$colour->getX()],
@@ -106,7 +123,7 @@ abstract class BaseColour implements Colour {
      * @return Matrix
      */
     protected function primaryBlue() {
-        $colour = new xyYColour(0.1500, 0.0600, 0.072186);
+        $colour = new xyYColour(0.1500, 0.0600, 1);
         return new Matrix(
             [
                 [$colour->getX()],

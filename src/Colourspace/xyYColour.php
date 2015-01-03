@@ -48,7 +48,13 @@ class xyYColour extends BaseColour {
      * @return float
      */
     public function getX() {
-        return $this->Y * $this->x / $this->y;
+        if ($this->y) {
+            return $this->Y * $this->x / $this->y;
+        } else if (!$this->Y) {
+            return $this->x;
+        } else {
+            return 0;
+        }
     }
 
     /**
@@ -65,10 +71,20 @@ class xyYColour extends BaseColour {
      * Gets the Z component of this colour's XYZ representation; in
      * the range [0.0–1.0].
      *
+     * NB it is not possible for us to differentiate between positive
+     * (non-zero) values of Z if the Y value is zero. In such cases, we
+     * shall return 1 as a normalised value.
+     *
      * @return float
      */
     public function getZ() {
-        return $this->Y * (1 - $this->x - $this->y) / $this->y;
+        if ($this->y) {
+            return $this->Y * (1 - $this->x - $this->y) / $this->y;
+        } else if (!$this->x && !$this->Y) {
+            return 1;
+        } else {
+            return 0;
+        }
     }
 
     /**
