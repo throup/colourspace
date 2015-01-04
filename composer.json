@@ -16,6 +16,11 @@
       "Colourspace\\": "src/"
     }
   },
+  "autoload-dev": {
+    "psr-4": {
+      "Colourspace\\": "tests/"
+    }
+  },
   "include-path": ["src"],
   "require-dev": {
     "phing/phing": "~2.9",
