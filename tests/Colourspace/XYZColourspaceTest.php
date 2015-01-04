@@ -1,6 +1,6 @@
 <?php
 /**
- * This file contains test cases for the XYZColourspace class.
+ * This file contains test cases for the XYZ class.
  *
  * @author    Chris Throup <chris@throup.org.uk>
  * @copyright 2015 Chris Throup
@@ -9,7 +9,6 @@
 
 namespace Colourspace\Colourspace;
 
-use Colourspace\Colourspace\Colour\XYZ;
 use PHPUnit_Framework_TestCase;
 
 /**
@@ -20,7 +19,7 @@ class XYZColourspaceTest extends PHPUnit_Framework_TestCase {
      * @before
      */
     public function setUp() {
-        $this->colourspace = new XYZColourspace();
+        $this->colourspace = new Space\XYZ();
     }
 
     /**
@@ -111,7 +110,7 @@ class XYZColourspaceTest extends PHPUnit_Framework_TestCase {
      * @dataProvider XYZ_data
      */
     public function identify_returnsCorrectXYZValues($X, $Y, $Z) {
-        $colour = new XYZ($X, $Y, $Z);
+        $colour = new Colour\XYZ($X, $Y, $Z);
 
         $expected = [
             'X' => $X,
@@ -154,6 +153,13 @@ class XYZColourspaceTest extends PHPUnit_Framework_TestCase {
     }
 
     /**
+     * @test
+     */
+    public function usableAsSpace() {
+        $this->assertIsSpace($this->colourspace);
+    }
+
+    /**
      * Asserts that the variable is an implementation of Colour.
      *
      * @param Colour $colour
@@ -163,7 +169,16 @@ class XYZColourspaceTest extends PHPUnit_Framework_TestCase {
     }
 
     /**
-     * @var XYZColourspace
+     * Asserts that the variable is an implementation of Space.
+     *
+     * @param Space $colourspace
+     */
+    protected function assertIsSpace(Space $colourspace) {
+        $colourspace;
+    }
+
+    /**
+     * @var Space\XYZ
      */
     private $colourspace;
 }

@@ -1,20 +1,22 @@
 <?php
 /**
- * This file contains the xyYColourspace class.
+ * This file contains the xyY class.
  *
  * @author    Chris Throup <chris@throup.org.uk>
  * @copyright 2015 Chris Throup
  * @licence   GPL-3.0+
  */
 
-namespace Colourspace\Colourspace;
+namespace Colourspace\Colourspace\Space;
 
-use Colourspace\Colourspace\Colour\XYZ;
+use Colourspace\Colourspace\Colour;
+use Colourspace\Colourspace\Space;
+use Colourspace\Colourspace\StandardIlluminantFactory;
 
 /**
  * Represents the xyY colourspace.
  */
-class xyYColourspace {
+class xyY extends XYZbased {
     /**
      * @return Colour
      */
@@ -39,7 +41,8 @@ class xyYColourspace {
      * @return float[]
      */
     public function identify(Colour $colour) {
-        if ($sum = $colour->getX() + $colour->getY() + $colour->getZ()) {
+        $sum = $colour->getX() + $colour->getY() + $colour->getZ();
+        if ($sum) {
             return [
                 'x' => $colour->getX() / $sum,
                 'y' => $colour->getY() / $sum,
@@ -78,7 +81,6 @@ class xyYColourspace {
             $Z = 0;
         }
 
-
-        return new XYZ($X, $Y, $Z);
+        return parent::generate($X, $Y, $Z);
     }
 }

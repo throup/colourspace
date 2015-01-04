@@ -14,7 +14,7 @@ namespace Colourspace\Colourspace;
  */
 class StandardIlluminantFactory {
     public function __construct() {
-        $this->colourspace = new xyYColourspace();
+        $this->colourspace = new Space\xyY();
     }
 
     /**
@@ -47,7 +47,7 @@ class StandardIlluminantFactory {
     }
 
     /**
-     * @var xyYColourspace
+     * @var Space\xyY
      */
     private $colourspace;
 }

@@ -10,9 +10,6 @@
 namespace Colourspace\Colourspace\Colour;
 
 use Colourspace\Colourspace\Colour;
-use Colourspace\Colourspace\StandardIlluminantFactory;
-use Colourspace\Colourspace\xyYColourspace;
-use Colourspace\Matrix\Matrix;
 
 /**
  * Represents a colour in an XYZ colourspace

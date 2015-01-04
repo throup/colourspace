@@ -1,20 +1,22 @@
 <?php
 /**
- * This file contains the XYZColourspace class.
+ * This file contains the XYZ class.
  *
  * @author    Chris Throup <chris@throup.org.uk>
  * @copyright 2015 Chris Throup
  * @licence   GPL-3.0+
  */
 
-namespace Colourspace\Colourspace;
+namespace Colourspace\Colourspace\Space;
 
-use Colourspace\Colourspace\Colour\XYZ;
+use Colourspace\Colourspace\Colour;
+use Colourspace\Colourspace\Space;
+use Colourspace\Colourspace\StandardIlluminantFactory;
 
 /**
  * Represents the XYZ colourspace.
  */
-class XYZColourspace {
+class XYZ extends XYZbased {
     /**
      * @return Colour
      */
@@ -44,15 +46,5 @@ class XYZColourspace {
             'Y' => $colour->getY(),
             'Z' => $colour->getZ(),
         ];
-    }
-
-    /**
-     * @param float $X
-     * @param float $Y
-     * @param float $Z
-     * @return Colour
-     */
-    public function generate($X, $Y, $Z) {
-        return new XYZ($X, $Y, $Z);
     }
 }

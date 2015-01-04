@@ -1,21 +1,23 @@
 <?php
 /**
- * This file contains the sRGBColourspace class.
+ * This file contains the sRGB class.
  *
  * @author    Chris Throup <chris@throup.org.uk>
  * @copyright 2014-2015 Chris Throup
  * @licence   GPL-3.0+
  */
 
-namespace Colourspace\Colourspace;
+namespace Colourspace\Colourspace\Space;
 
-use Colourspace\Colourspace\Colour\XYZ;
+use Colourspace\Colourspace\Colour;
+use Colourspace\Colourspace\Space;
+use Colourspace\Colourspace\StandardIlluminantFactory;
 use Colourspace\Matrix\Matrix;
 
 /**
  * Represents the sRGB colourspace.
  */
-class sRGBColourspace {
+class sRGB extends XYZbased {
     /**
      * @return Colour
      */
@@ -28,7 +30,7 @@ class sRGBColourspace {
      * @return Colour[]
      */
     public function primaries() {
-        $colourspace = new xyYColourspace();
+        $colourspace = new Space\xyY();
         return [
             'R' => $colourspace->generate(0.6400, 0.3300, 0.212656),
             'G' => $colourspace->generate(0.3000, 0.6000, 0.715158),
@@ -67,7 +69,7 @@ class sRGBColourspace {
         $Y = $XYZ[1][0];
         $Z = $XYZ[2][0];
 
-        return new XYZ($X, $Y, $Z);
+        return parent::generate($X, $Y, $Z);
     }
 
     /**

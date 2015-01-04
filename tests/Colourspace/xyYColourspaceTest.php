@@ -1,6 +1,6 @@
 <?php
 /**
- * This file contains test cases for the xyYColourspace class.
+ * This file contains test cases for the xyY class.
  *
  * @author    Chris Throup <chris@throup.org.uk>
  * @copyright 2015 Chris Throup
@@ -9,7 +9,6 @@
 
 namespace Colourspace\Colourspace;
 
-use Colourspace\Colourspace\Colour\XYZ;
 use PHPUnit_Framework_TestCase;
 
 /**
@@ -20,7 +19,7 @@ class xyYColourspaceTest extends PHPUnit_Framework_TestCase {
      * @before
      */
     public function setUp() {
-        $this->colourspace = new xyYColourspace();
+        $this->colourspace = new Space\xyY();
     }
 
     /**
@@ -132,7 +131,7 @@ class xyYColourspaceTest extends PHPUnit_Framework_TestCase {
      * @dataProvider XYZtoxyY_data
      */
     public function identify_returnsCorrectxyYValues($X, $Y, $Z, $x, $y) {
-        $colour = new XYZ($X, $Y, $Z);
+        $colour = new Colour\XYZ($X, $Y, $Z);
 
         $expected = [
             'x' => $x,
@@ -176,6 +175,13 @@ class xyYColourspaceTest extends PHPUnit_Framework_TestCase {
     }
 
     /**
+     * @test
+     */
+    public function usableAsSpace() {
+        $this->assertIsSpace($this->colourspace);
+    }
+
+    /**
      * Asserts that the variable is an implementation of Colour.
      *
      * @param Colour $colour
@@ -185,7 +191,16 @@ class xyYColourspaceTest extends PHPUnit_Framework_TestCase {
     }
 
     /**
-     * @var xyYColourspace
+     * Asserts that the variable is an implementation of Space.
+     *
+     * @param Space $colourspace
+     */
+    protected function assertIsSpace(Space $colourspace) {
+        $colourspace;
+    }
+
+    /**
+     * @var Space\xyY
      */
     private $colourspace;
 }

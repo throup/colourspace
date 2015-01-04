@@ -30,7 +30,7 @@ class xyYColourTest extends PHPUnit_Framework_TestCase {
 
         $colour = $this->generate_xyYColour($x, $y, $Y);
 
-        $colourspace = new xyYColourspace();
+        $colourspace = new Space\xyY();
         $xyY = $colourspace->identify($colour);
 
         $this->assertEquals($x, $xyY['x']);
@@ -75,7 +75,7 @@ class xyYColourTest extends PHPUnit_Framework_TestCase {
     protected function generate_xyYColour($x = 0.0,
                                           $y = 0.0,
                                           $Y = 0.0) {
-        $colourspace = new xyYColourspace();
+        $colourspace = new Space\xyY();
         return $colourspace->generate($x, $y, $Y);
     }
 }

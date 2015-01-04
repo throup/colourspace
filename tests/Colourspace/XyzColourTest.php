@@ -9,7 +9,6 @@
 
 namespace Colourspace\Colourspace;
 
-use Colourspace\Colourspace\Colour\XYZ;
 use PHPUnit_Framework_TestCase;
 
 /**
@@ -67,7 +66,7 @@ class XyzColourTest extends PHPUnit_Framework_TestCase {
 
         $colour = $this->generateXyzColour($X, $Y, $Z);
 
-        $colourspace = new sRGBColourspace();
+        $colourspace = new Space\sRGB();
         $RGB = $colourspace->identify($colour);
 
         $this->assertEquals($R, $RGB['R'], '', self::DELTA);
@@ -82,7 +81,7 @@ class XyzColourTest extends PHPUnit_Framework_TestCase {
 
         $colour = $this->generateXyzColour($X, $Y, $Z);
 
-        $colourspace = new sRGBColourspace();
+        $colourspace = new Space\sRGB();
         $RGB = $colourspace->identify($colour);
 
         $this->assertEquals($G, $RGB['G'], '', self::DELTA);
@@ -97,7 +96,7 @@ class XyzColourTest extends PHPUnit_Framework_TestCase {
 
         $colour = $this->generateXyzColour($X, $Y, $Z);
 
-        $colourspace = new sRGBColourspace();
+        $colourspace = new Space\sRGB();
         $RGB = $colourspace->identify($colour);
 
         $this->assertEquals($B, $RGB['B'], '', self::DELTA);
@@ -113,11 +112,11 @@ class XyzColourTest extends PHPUnit_Framework_TestCase {
      * @param float $Z The Z component of this colour's XYZ representation; in
      *                 the range [0.0–1.0].
      *
-     * @return XYZ
+     * @return Colour
      */
     protected function generateXyzColour($X = 0.0,
                                          $Y = 0.0,
                                          $Z = 0.0) {
-        return new XYZ($X, $Y, $Z);
+        return new Colour\XYZ($X, $Y, $Z);
     }
 }

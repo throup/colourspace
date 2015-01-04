@@ -29,7 +29,7 @@ class RgbColourTest extends PHPUnit_Framework_TestCase {
         $blue  = 0.8;
 
         $colour = $this->generateRgbColour($red, $green, $blue);
-        $colourspace = new sRGBColourspace();
+        $colourspace = new Space\sRGB();
 
         $expected = [
             'R' => $red,
@@ -113,7 +113,7 @@ class RgbColourTest extends PHPUnit_Framework_TestCase {
     protected function generateRgbColour($red   = 0.0,
                                          $green = 0.0,
                                          $blue  = 0.0) {
-        $colourspace = new sRGBColourspace();
+        $colourspace = new Space\sRGB();
         return $colourspace->generate($red, $green, $blue);
     }
 }
