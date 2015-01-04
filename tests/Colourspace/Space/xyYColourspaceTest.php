@@ -7,8 +7,10 @@
  * @licence   GPL-3.0+
  */
 
-namespace Colourspace\Colourspace;
+namespace Colourspace\Colourspace\Space;
 
+use Colourspace\Colourspace\Colour;
+use Colourspace\Colourspace\Space;
 use PHPUnit_Framework_TestCase;
 
 /**

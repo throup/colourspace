@@ -1,25 +1,27 @@
 <?php
 /**
- * This file contains test cases for the XYZ class.
+ * This file contains test cases for the sRGB class.
  *
  * @author    Chris Throup <chris@throup.org.uk>
- * @copyright 2015 Chris Throup
+ * @copyright 2014-2015 Chris Throup
  * @licence   GPL-3.0+
  */
 
-namespace Colourspace\Colourspace;
+namespace Colourspace\Colourspace\Space;
 
+use Colourspace\Colourspace\Colour;
+use Colourspace\Colourspace\Space;
 use PHPUnit_Framework_TestCase;
 
 /**
- * Tests for the representation of the XYZ colourspace.
+ * Tests for the representation of the sRGB colourspace.
  */
-class XYZColourspaceTest extends PHPUnit_Framework_TestCase {
+class sRGBColourspaceTest extends PHPUnit_Framework_TestCase {
     /**
      * @before
      */
     public function setUp() {
-        $this->colourspace = new Space\XYZ();
+        $this->colourspace = new Space\sRGB();
     }
 
     /**
@@ -32,19 +34,19 @@ class XYZColourspaceTest extends PHPUnit_Framework_TestCase {
     /**
      * @test
      */
-    public function whitePoint_matchesE() {
+    public function whitePoint_matchesD65() {
         $whitePoint = $this->colourspace->whitePoint();
         $expected = [
-            'X' => 1,
-            'Y' => 1,
-            'Z' => 1,
+            'X' => 0.95047,
+            'Y' => 1.00000,
+            'Z' => 1.08883,
         ];
         $result = [
             'X' => $whitePoint->getX(),
             'Y' => $whitePoint->getY(),
             'Z' => $whitePoint->getZ(),
         ];
-        $this->assertEquals($expected, $result);
+        $this->assertEquals($expected, $result, '', 0.00065);
     }
 
     /**
@@ -68,9 +70,9 @@ class XYZColourspaceTest extends PHPUnit_Framework_TestCase {
      */
     public function primaries_keysAre_RGB_() {
         $expected = [
-            'X',
-            'Y',
-            'Z',
+            'R',
+            'G',
+            'B',
         ];
         $keys = array_keys($this->colourspace->primaries());
         $this->assertEquals($expected, $keys);
@@ -94,39 +96,39 @@ class XYZColourspaceTest extends PHPUnit_Framework_TestCase {
             'Y' => $colour->getY(),
             'Z' => $colour->getZ(),
         ];
-        $this->assertEquals($expected, $result);
+        $this->assertEquals($expected, $result, '', 0.0002);
     }
 
     public function primaries_data() {
         return [
-            ['X', 1, 0, 0],
-            ['Y', 0, 1, 0],
-            ['Z', 0, 0, 1],
+            ['R', 0.4124564, 0.2126729, 0.0193339],
+            ['G', 0.3575761, 0.7151522, 0.1191920],
+            ['B', 0.1804375, 0.0721750, 0.9503041],
         ];
     }
 
     /**
      * @test
-     * @dataProvider XYZ_data
+     * @dataProvider XYZtoRGB_data
      */
-    public function identify_returnsCorrectXYZValues($X, $Y, $Z) {
+    public function identify_returnsCorrectRGBValues($X, $Y, $Z, $R, $G, $B) {
         $colour = new Colour\XYZ($X, $Y, $Z);
 
         $expected = [
-            'X' => $X,
-            'Y' => $Y,
-            'Z' => $Z,
+            'R' => $R,
+            'G' => $G,
+            'B' => $B,
         ];
         $result = $this->colourspace->identify($colour);
-        $this->assertEquals($expected, $result);
+        $this->assertEquals($expected, $result, '', 0.0004);
     }
 
     /**
      * @test
-     * @dataProvider XYZ_data
+     * @dataProvider XYZtoRGB_data
      */
-    public function generate_returnsColourWithCorrectXYZValues($X, $Y, $Z) {
-        $colour = $this->colourspace->generate($X, $Y, $Z);
+    public function generate_returnsColourWithCorrectXYZValues($X, $Y, $Z, $R, $G, $B) {
+        $colour = $this->colourspace->generate($R, $G, $B);
 
         $expected = [
             'X' => $X,
@@ -138,17 +140,14 @@ class XYZColourspaceTest extends PHPUnit_Framework_TestCase {
             'Y' => $colour->getY(),
             'Z' => $colour->getZ(),
         ];
-        $this->assertEquals($expected, $result);
+        $this->assertEquals($expected, $result, '', 0.00065);
     }
 
-    public function XYZ_data() {
+    public function XYZtoRGB_data() {
         return [
-            [1.0,       0.0,       0.0],
-            [0.0,       1.0,       0.0],
-            [0.0,       0.0,       1.0],
-            [0.4124564, 0.2126729, 0.0193339],
-            [0.3575761, 0.7151522, 0.1191920],
-            [0.1804375, 0.0721750, 0.9503041],
+            [0.4124564, 0.2126729, 0.0193339, 1.0, 0.0, 0.0],
+            [0.3575761, 0.7151522, 0.1191920, 0.0, 1.0, 0.0],
+            [0.1804375, 0.0721750, 0.9503041, 0.0, 0.0, 1.0],
         ];
     }
 
@@ -178,7 +177,7 @@ class XYZColourspaceTest extends PHPUnit_Framework_TestCase {
     }
 
     /**
-     * @var Space\XYZ
+     * @var Space\sRGB
      */
     private $colourspace;
 }
