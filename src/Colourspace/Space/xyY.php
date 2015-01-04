@@ -11,7 +11,6 @@ namespace Colourspace\Colourspace\Space;
 
 use Colourspace\Colourspace\Colour;
 use Colourspace\Colourspace\Space;
-use Colourspace\Colourspace\StandardIlluminantFactory;
 
 /**
  * Represents the xyY colourspace.
@@ -21,8 +20,7 @@ class xyY extends XYZbased {
      * @return Colour
      */
     public function whitePoint() {
-        $factory = new StandardIlluminantFactory();
-        return $factory->E();
+        return $this->generate(1/3, 1/3, 1);
     }
 
     /**
@@ -82,5 +80,12 @@ class xyY extends XYZbased {
         }
 
         return parent::generate($X, $Y, $Z);
+    }
+
+    /**
+     * @return string[]
+     */
+    protected function primaryKeys() {
+        return ['x', 'y', 'Y'];
     }
 }

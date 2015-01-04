@@ -19,32 +19,37 @@ use Colourspace\Matrix\Matrix;
  */
 class sRGB extends XYZbased {
     /**
-     * @return Colour
-     */
-    public function whitePoint() {
-        $factory = new StandardIlluminantFactory();
-        return $factory->D(65);
-    }
-
-    /**
-     * @return Colour[]
-     */
-    public function primaries() {
-        $colourspace = new Space\xyY();
-        return [
-            'R' => $colourspace->generate(0.6400, 0.3300, 0.212656),
-            'G' => $colourspace->generate(0.3000, 0.6000, 0.715158),
-            'B' => $colourspace->generate(0.1500, 0.0600, 0.072186),
-        ];
-    }
-
-    /**
+     * Calculates the RGB representation for this colour.
+     *
      * @param Colour $colour
-     * @return float[]
+     *
+     * @return float[]|array {
+     *     @var float $R The red component of this colour's RGB
+     *                   representation; in the range [0.0–1.0].
+     *     @var float $G The green component of this colour's RGB
+     *                   representation; in the range [0.0–1.0].
+     *     @var float $B The blue component of this colour's RGB
+     *                   representation; in the range [0.0–1.0].
+     * }
      */
     public function identify(Colour $colour) {
-        $RGB = $this->getRGB($colour);
-        return $RGB;
+        $XYZ = new Matrix(
+            [
+                [$colour->getX()],
+                [$colour->getY()],
+                [$colour->getZ()],
+            ]
+        );
+
+        $matrix = $this->sRGBinverseMatrix();
+
+        $RGB = $matrix->product($XYZ);
+
+        return [
+            'R' => $this->applyGamma2($RGB[0][0]),
+            'G' => $this->applyGamma2($RGB[1][0]),
+            'B' => $this->applyGamma2($RGB[2][0]),
+        ];
     }
 
     /**
@@ -145,8 +150,8 @@ class sRGB extends XYZbased {
      * @return Matrix
      */
     protected function primaryRed() {
-        $primaries = $this->primaries();
-        $colour = $primaries['R'];
+        $colourspace = new Space\xyY();
+        $colour = $colourspace->generate(0.6400, 0.3300, 1);
         return new Matrix(
             [
                 [$colour->getX()],
@@ -160,8 +165,8 @@ class sRGB extends XYZbased {
      * @return Matrix
      */
     protected function primaryGreen() {
-        $primaries = $this->primaries();
-        $colour = $primaries['G'];
+        $colourspace = new Space\xyY();
+        $colour = $colourspace->generate(0.3000, 0.6000, 1);
         return new Matrix(
             [
                 [$colour->getX()],
@@ -175,8 +180,8 @@ class sRGB extends XYZbased {
      * @return Matrix
      */
     protected function primaryBlue() {
-        $primaries = $this->primaries();
-        $colour = $primaries['B'];
+        $colourspace = new Space\xyY();
+        $colour = $colourspace->generate(0.1500, 0.0600, 1);
         return new Matrix(
             [
                 [$colour->getX()],
@@ -184,41 +189,6 @@ class sRGB extends XYZbased {
                 [$colour->getZ()],
             ]
         );
-    }
-
-
-
-
-    /**
-     * Calculates the RGB representation for this colour.
-     *
-     * @return float[]|array {
-     *     @var float $R The red component of this colour's RGB
-     *                   representation; in the range [0.0–1.0].
-     *     @var float $G The green component of this colour's RGB
-     *                   representation; in the range [0.0–1.0].
-     *     @var float $B The blue component of this colour's RGB
-     *                   representation; in the range [0.0–1.0].
-     * }
-     */
-    protected function getRGB(Colour $colour) {
-        $XYZ = new Matrix(
-            [
-                [$colour->getX()],
-                [$colour->getY()],
-                [$colour->getZ()],
-            ]
-        );
-
-        $matrix = $this->sRGBinverseMatrix();
-
-        $RGB = $matrix->product($XYZ);
-
-        return [
-            'R' => $this->applyGamma2($RGB[0][0]),
-            'G' => $this->applyGamma2($RGB[1][0]),
-            'B' => $this->applyGamma2($RGB[2][0]),
-        ];
     }
 
     /**
@@ -250,5 +220,12 @@ class sRGB extends XYZbased {
             $output = $input * 12.92;
         }
         return $output;
+    }
+
+    /**
+     * @return string[]
+     */
+    protected function primaryKeys() {
+        return ['R', 'G', 'B'];
     }
 }

@@ -89,7 +89,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
             'Y' => $colour->getY(),
             'Z' => $colour->getZ(),
         ];
-        $this->assertEquals($expected, $result, '', 0.00015);
+        $this->assertEquals($expected, $result, '', 0.00065);
     }
 
     /**

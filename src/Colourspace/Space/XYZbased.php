@@ -17,6 +17,28 @@ use Colourspace\Colourspace\Space;
  */
 abstract class XYZbased implements Space {
     /**
+     * @return Colour[]
+     */
+    public function primaries() {
+        $colours = [
+            $this->generate(1, 0, 0),
+            $this->generate(0, 1, 0),
+            $this->generate(0, 0, 1),
+        ];
+
+        $primaries = [];
+        foreach ($this->primaryKeys() as $i => $key) {
+            $primaries[$key] = $colours[$i];
+        }
+        return $primaries;
+    }
+
+    /**
+     * @return string[]
+     */
+    abstract protected function primaryKeys();
+
+    /**
      * @param float $X
      * @param float $Y
      * @param float $Z
@@ -24,5 +46,12 @@ abstract class XYZbased implements Space {
      */
     public function generate($X, $Y, $Z) {
         return new Colour\XYZ($X, $Y, $Z);
+    }
+
+    /**
+     * @return Colour
+     */
+    public function whitePoint() {
+        return $this->generate(1, 1, 1);
     }
 }

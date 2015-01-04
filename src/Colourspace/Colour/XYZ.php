@@ -80,7 +80,7 @@ class XYZ implements Colour {
      *
      * @var float
      */
-    private $X   = 0.0;
+    private $X = 0.0;
 
     /**
      * The Y component of this colour's XYZ representation; in the
@@ -96,5 +96,5 @@ class XYZ implements Colour {
      *
      * @var float
      */
-    private $Z  = 0.0;
+    private $Z = 0.0;
 }
