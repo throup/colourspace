@@ -30,9 +30,12 @@ class xyYColourTest extends PHPUnit_Framework_TestCase {
 
         $colour = $this->generate_xyYColour($x, $y, $Y);
 
-        $this->assertEquals($x, $colour->get_x());
-        $this->assertEquals($y, $colour->get_y());
-        $this->assertEquals($Y, $colour->getY());
+        $colourspace = new xyYColourspace();
+        $xyY = $colourspace->identify($colour);
+
+        $this->assertEquals($x, $xyY['x']);
+        $this->assertEquals($y, $xyY['y']);
+        $this->assertEquals($Y, $xyY['Y']);
     }
 
     /**
@@ -57,7 +60,7 @@ class xyYColourTest extends PHPUnit_Framework_TestCase {
         $this->assertFalse($second->equals($first));
     }
 
-    /**
+    /*
      * Generate a testable colour object for the provided xyY representation.
      *
      * @param float $x The x component of this colour's xyY representation; in
@@ -67,12 +70,13 @@ class xyYColourTest extends PHPUnit_Framework_TestCase {
      * @param float $Y The (big) Y component of this colour's xyY
      *                 representation; in the range [0.0–1.0].
      *
-     * @return xyYColour
+     * @return Colour
      */
     protected function generate_xyYColour($x = 0.0,
                                           $y = 0.0,
                                           $Y = 0.0) {
-        return new xyYColour($x, $y, $Y);
+        $colourspace = new xyYColourspace();
+        return $colourspace->generate($x, $y, $Y);
     }
 }
 

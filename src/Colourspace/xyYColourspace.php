@@ -26,9 +26,9 @@ class xyYColourspace {
      */
     public function primaries() {
         return [
-            'x' => new xyYColour(1, 0, 0),
-            'y' => new xyYColour(0, 1, 0),
-            'Y' => new xyYColour(0, 0, 1),
+            'x' => $this->generate(1, 0, 0),
+            'y' => $this->generate(0, 1, 0),
+            'Y' => $this->generate(0, 0, 1),
         ];
     }
 
@@ -60,6 +60,23 @@ class xyYColourspace {
      * @return Colour
      */
     public function generate($x, $y, $Y) {
-        return new xyYColour($x, $y, $Y);
+        if ($y) {
+            $X = $Y * $x / $y;
+        } else if (!$Y) {
+            $X = $x;
+        } else {
+            $X = 0;
+        }
+
+        if ($y) {
+            $Z = $Y * (1 - $x - $y) / $y;
+        } else if (!$x && !$Y) {
+            $Z = 1;
+        } else {
+            $Z = 0;
+        }
+
+
+        return new XyzColour($X, $Y, $Z);
     }
 }

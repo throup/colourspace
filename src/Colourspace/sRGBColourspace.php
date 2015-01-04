@@ -26,10 +26,11 @@ class sRGBColourspace {
      * @return Colour[]
      */
     public function primaries() {
+        $colourspace = new xyYColourspace();
         return [
-            'R' => new xyYColour(0.6400, 0.3300, 0.212656),
-            'G' => new xyYColour(0.3000, 0.6000, 0.715158),
-            'B' => new xyYColour(0.1500, 0.0600, 0.072186),
+            'R' => $colourspace->generate(0.6400, 0.3300, 0.212656),
+            'G' => $colourspace->generate(0.3000, 0.6000, 0.715158),
+            'B' => $colourspace->generate(0.1500, 0.0600, 0.072186),
         ];
     }
 
@@ -143,7 +144,8 @@ class sRGBColourspace {
      * @return Matrix
      */
     protected function primaryRed() {
-        $colour = new xyYColour(0.6400, 0.3300, 1);
+        $primaries = $this->primaries();
+        $colour = $primaries['R'];
         return new Matrix(
             [
                 [$colour->getX()],
@@ -157,7 +159,8 @@ class sRGBColourspace {
      * @return Matrix
      */
     protected function primaryGreen() {
-        $colour = new xyYColour(0.3000, 0.6000, 1);
+        $primaries = $this->primaries();
+        $colour = $primaries['G'];
         return new Matrix(
             [
                 [$colour->getX()],
@@ -171,7 +174,8 @@ class sRGBColourspace {
      * @return Matrix
      */
     protected function primaryBlue() {
-        $colour = new xyYColour(0.1500, 0.0600, 1);
+        $primaries = $this->primaries();
+        $colour = $primaries['B'];
         return new Matrix(
             [
                 [$colour->getX()],

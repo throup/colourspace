@@ -13,6 +13,10 @@ namespace Colourspace\Colourspace;
  * Factory for colours representing standard illuminants.
  */
 class StandardIlluminantFactory {
+    public function __construct() {
+        $this->colourspace = new xyYColourspace();
+    }
+
     /**
      * Create an illuminant from the CIE D-series.
      *
@@ -30,7 +34,7 @@ class StandardIlluminantFactory {
         $y = 2.870 * $x - 3.000 * pow($x, 2) - 0.275;
         $Y = 1;
 
-        return new xyYColour($x, $y, $Y);
+        return $this->colourspace->generate($x, $y, $Y);
     }
 
     /**
@@ -39,6 +43,11 @@ class StandardIlluminantFactory {
      * @return Colour
      */
     public function E() {
-        return new xyYColour(1/3, 1/3, 1);
+        return $this->colourspace->generate(1/3, 1/3, 1);
     }
+
+    /**
+     * @var xyYColourspace
+     */
+    private $colourspace;
 }

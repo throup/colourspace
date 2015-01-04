@@ -95,7 +95,8 @@ abstract class BaseColour implements Colour {
      * @return Matrix
      */
     protected function primaryRed() {
-        $colour = new xyYColour(0.6400, 0.3300, 1);
+        $colourspace = new xyYColourspace();
+        $colour = $colourspace->generate(0.6400, 0.3300, 1);
         return new Matrix(
             [
                 [$colour->getX()],
@@ -109,7 +110,8 @@ abstract class BaseColour implements Colour {
      * @return Matrix
      */
     protected function primaryGreen() {
-        $colour = new xyYColour(0.3000, 0.6000, 1);
+        $colourspace = new xyYColourspace();
+        $colour = $colourspace->generate(0.3000, 0.6000, 1);
         return new Matrix(
             [
                 [$colour->getX()],
@@ -123,7 +125,8 @@ abstract class BaseColour implements Colour {
      * @return Matrix
      */
     protected function primaryBlue() {
-        $colour = new xyYColour(0.1500, 0.0600, 1);
+        $colourspace = new xyYColourspace();
+        $colour = $colourspace->generate(0.1500, 0.0600, 1);
         return new Matrix(
             [
                 [$colour->getX()],
