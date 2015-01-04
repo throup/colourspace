@@ -1,6 +1,6 @@
 <?php
 /**
- * This file contains test cases for the XyzColour class.
+ * This file contains test cases for the XYZ class.
  *
  * @author    Chris Throup <chris@throup.org.uk>
  * @copyright 2014-2015 Chris Throup
@@ -9,6 +9,7 @@
 
 namespace Colourspace\Colourspace;
 
+use Colourspace\Colourspace\Colour\XYZ;
 use PHPUnit_Framework_TestCase;
 
 /**
@@ -103,11 +104,11 @@ class XyzColourTest extends PHPUnit_Framework_TestCase {
      * @param float $Z The Z component of this colour's XYZ representation; in
      *                 the range [0.0–1.0].
      *
-     * @return XyzColour
+     * @return XYZ
      */
     protected function generateXyzColour($X = 0.0,
                                          $Y = 0.0,
                                          $Z = 0.0) {
-        return new XyzColour($X, $Y, $Z);
+        return new XYZ($X, $Y, $Z);
     }
 }

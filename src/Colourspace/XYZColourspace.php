@@ -9,6 +9,8 @@
 
 namespace Colourspace\Colourspace;
 
+use Colourspace\Colourspace\Colour\XYZ;
+
 /**
  * Represents the XYZ colourspace.
  */
@@ -26,9 +28,9 @@ class XYZColourspace {
      */
     public function primaries() {
         return [
-            'X' => new XyzColour(1, 0, 0),
-            'Y' => new XyzColour(0, 1, 0),
-            'Z' => new XyzColour(0, 0, 1),
+            'X' => $this->generate(1, 0, 0),
+            'Y' => $this->generate(0, 1, 0),
+            'Z' => $this->generate(0, 0, 1),
         ];
     }
 
@@ -51,6 +53,6 @@ class XYZColourspace {
      * @return Colour
      */
     public function generate($X, $Y, $Z) {
-        return new XyzColour($X, $Y, $Z);
+        return new XYZ($X, $Y, $Z);
     }
 }

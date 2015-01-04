@@ -9,6 +9,8 @@
 
 namespace Colourspace\Colourspace;
 
+use Colourspace\Colourspace\Colour\XYZ;
+
 /**
  * Represents the xyY colourspace.
  */
@@ -77,6 +79,6 @@ class xyYColourspace {
         }
 
 
-        return new XyzColour($X, $Y, $Z);
+        return new XYZ($X, $Y, $Z);
     }
 }

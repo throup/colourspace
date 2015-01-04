@@ -9,6 +9,7 @@
 
 namespace Colourspace\Colourspace;
 
+use Colourspace\Colourspace\Colour\XYZ;
 use PHPUnit_Framework_TestCase;
 
 /**
@@ -131,7 +132,7 @@ class xyYColourspaceTest extends PHPUnit_Framework_TestCase {
      * @dataProvider XYZtoxyY_data
      */
     public function identify_returnsCorrectxyYValues($X, $Y, $Z, $x, $y) {
-        $colour = new XYZColour($X, $Y, $Z);
+        $colour = new XYZ($X, $Y, $Z);
 
         $expected = [
             'x' => $x,

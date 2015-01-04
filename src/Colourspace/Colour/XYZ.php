@@ -1,20 +1,23 @@
 <?php
 /**
- * This file contains the XyzColour class.
+ * This file contains the XYZ class.
  *
  * @author    Chris Throup <chris@throup.org.uk>
  * @copyright 2014-2015 Chris Throup
  * @licence   GPL-3.0+
  */
 
-namespace Colourspace\Colourspace;
+namespace Colourspace\Colourspace\Colour;
 
+use Colourspace\Colourspace\Colour;
+use Colourspace\Colourspace\StandardIlluminantFactory;
+use Colourspace\Colourspace\xyYColourspace;
 use Colourspace\Matrix\Matrix;
 
 /**
  * Represents a colour in an XYZ colourspace
  */
-class XyzColour implements Colour {
+class XYZ implements Colour {
     /**
      * Instantiate a colour for the provided XYZ representation.
      *

@@ -9,6 +9,7 @@
 
 namespace Colourspace\Colourspace;
 
+use Colourspace\Colourspace\Colour\XYZ;
 use PHPUnit_Framework_TestCase;
 
 /**
@@ -110,7 +111,7 @@ class sRGBColourspaceTest extends PHPUnit_Framework_TestCase {
      * @dataProvider XYZtoRGB_data
      */
     public function identify_returnsCorrectRGBValues($X, $Y, $Z, $R, $G, $B) {
-        $colour = new XyzColour($X, $Y, $Z);
+        $colour = new XYZ($X, $Y, $Z);
 
         $expected = [
             'R' => $R,

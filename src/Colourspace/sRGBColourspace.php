@@ -8,6 +8,8 @@
  */
 
 namespace Colourspace\Colourspace;
+
+use Colourspace\Colourspace\Colour\XYZ;
 use Colourspace\Matrix\Matrix;
 
 /**
@@ -68,7 +70,7 @@ class sRGBColourspace {
         $Y = $XYZ[1][0];
         $Z = $XYZ[2][0];
 
-        return new XyzColour($X, $Y, $Z);
+        return new XYZ($X, $Y, $Z);
     }
 
     /**
