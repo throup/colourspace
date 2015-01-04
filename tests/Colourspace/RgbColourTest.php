@@ -103,11 +103,12 @@ class RgbColourTest extends PHPUnit_Framework_TestCase {
      * @param float $blue  The blue component of this colour's RGB
      *                     representation; in the range [0.0–1.0].
      *
-     * @return RgbColour
+     * @return Colour
      */
     protected function generateRgbColour($red   = 0.0,
                                          $green = 0.0,
                                          $blue  = 0.0) {
-        return new RgbColour($red, $green, $blue);
+        $colourspace = new sRGBColourspace();
+        return $colourspace->generate($red, $green, $blue);
     }
 }

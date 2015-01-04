@@ -8,6 +8,7 @@
  */
 
 namespace Colourspace\Colourspace;
+use Colourspace\Matrix\Matrix;
 
 /**
  * Represents the sRGB colourspace.
@@ -51,6 +52,132 @@ class sRGBColourspace {
      * @return Colour
      */
     public function generate($R, $G, $B) {
-        return new RgbColour($R, $G, $B);
+        $RGB = new Matrix(
+            [
+                [$this->applyGamma($R)],
+                [$this->applyGamma($G)],
+                [$this->applyGamma($B)],
+            ]
+        );
+
+        $matrix = $this->sRGBmatrix();
+
+        $XYZ = $matrix->product($RGB);
+        $X = $XYZ[0][0];
+        $Y = $XYZ[1][0];
+        $Z = $XYZ[2][0];
+
+        return new XyzColour($X, $Y, $Z);
+    }
+
+    /**
+     * Applies the gamma curve appropriate to this RGB colour space.
+     *
+     * NB this initial implementation is for the sRGB space which does
+     * something a bit funky with the smaller values. Most RGB spaces simply
+     * apply an exponential factor.
+     *
+     * @param float $input The value to which the adjustment should be applied.
+     *
+     * @return float
+     */
+    protected function applyGamma($input) {
+        if ($input > 0.04045) {
+            $output = pow((($input + 0.055) / 1.055), 2.4);
+        } else {
+            $output = $input / 12.92;
+        }
+        return $output;
+    }
+
+    /**
+     * Returns the standard sRGB transformation matrix.
+     *
+     * @return Matrix
+     */
+    protected function sRGBmatrix() {
+        $W = $this->referenceWhite();
+        $R = $this->primaryRed();
+        $G = $this->primaryGreen();
+        $B = $this->primaryBlue();
+
+
+        $colours = new Matrix(
+            [
+                [$R[0][0], $G[0][0], $B[0][0]],
+                [$R[1][0], $G[1][0], $B[1][0]],
+                [$R[2][0], $G[2][0], $B[2][0]],
+            ]
+        );
+
+        $coloursI = $colours->inverse();
+
+        $S = $coloursI->product($W);
+
+        return new Matrix(
+            [
+                [$S[0][0] * $R[0][0], $S[1][0] * $G[0][0], $S[2][0] * $B[0][0]],
+                [$S[0][0] * $R[1][0], $S[1][0] * $G[1][0], $S[2][0] * $B[1][0]],
+                [$S[0][0] * $R[2][0], $S[1][0] * $G[2][0], $S[2][0] * $B[2][0]],
+            ]
+        );
+    }
+
+    /**
+     * @return Matrix
+     */
+    protected function referenceWhite() {
+        $factory = new StandardIlluminantFactory();
+        $illuminant = $factory->D(65);
+
+        return new Matrix(
+            [
+                [$illuminant->getX()],
+                [$illuminant->getY()],
+                [$illuminant->getZ()],
+            ]
+        );
+    }
+
+    /**
+     * @return Matrix
+     */
+    protected function primaryRed() {
+        $colour = new xyYColour(0.6400, 0.3300, 1);
+        return new Matrix(
+            [
+                [$colour->getX()],
+                [$colour->getY()],
+                [$colour->getZ()],
+            ]
+        );
+    }
+
+    /**
+     * @return Matrix
+     */
+    protected function primaryGreen() {
+        $colour = new xyYColour(0.3000, 0.6000, 1);
+        return new Matrix(
+            [
+                [$colour->getX()],
+                [$colour->getY()],
+                [$colour->getZ()],
+            ]
+        );
+    }
+
+    /**
+     * @return Matrix
+     */
+    protected function primaryBlue() {
+        $colour = new xyYColour(0.1500, 0.0600, 1);
+        return new Matrix(
+            [
+                [$colour->getX()],
+                [$colour->getY()],
+                [$colour->getZ()],
+            ]
+        );
     }
 }
