@@ -41,11 +41,8 @@ class sRGBColourspace {
      * @return float[]
      */
     public function identify(Colour $colour) {
-        return [
-            'R' => $colour->getRed(),
-            'G' => $colour->getGreen(),
-            'B' => $colour->getBlue(),
-        ];
+        $RGB = $this->getRGB($colour);
+        return $RGB;
     }
 
     /**
@@ -185,5 +182,71 @@ class sRGBColourspace {
                 [$colour->getZ()],
             ]
         );
+    }
+
+
+
+
+    /**
+     * Calculates the RGB representation for this colour.
+     *
+     * @return float[]|array {
+     *     @var float $R The red component of this colour's RGB
+     *                   representation; in the range [0.0–1.0].
+     *     @var float $G The green component of this colour's RGB
+     *                   representation; in the range [0.0–1.0].
+     *     @var float $B The blue component of this colour's RGB
+     *                   representation; in the range [0.0–1.0].
+     * }
+     */
+    protected function getRGB(Colour $colour) {
+        $XYZ = new Matrix(
+            [
+                [$colour->getX()],
+                [$colour->getY()],
+                [$colour->getZ()],
+            ]
+        );
+
+        $matrix = $this->sRGBinverseMatrix();
+
+        $RGB = $matrix->product($XYZ);
+
+        return [
+            'R' => $this->applyGamma2($RGB[0][0]),
+            'G' => $this->applyGamma2($RGB[1][0]),
+            'B' => $this->applyGamma2($RGB[2][0]),
+        ];
+    }
+
+    /**
+     * Returns the inverse of the standard sRGB transformation matrix.
+     *
+     * @return Matrix
+     */
+    protected function sRGBinverseMatrix() {
+        $matrix = $this->sRGBmatrix();
+        return $matrix->inverse();
+    }
+
+
+    /**
+     * Applies the gamma curve appropriate to this XYZ colour space.
+     *
+     * NB this initial implementation is for the sXYZ space which does
+     * something a bit funky with the smaller values. Most XYZ spaces simply
+     * apply an exponential factor.
+     *
+     * @param float $input The value to which the adjustment should be applied.
+     *
+     * @return float
+     */
+    protected function applyGamma2($input) {
+        if ($input > 0.031308) {
+            $output = 1.055 * pow($input, 1/2.4) - 0.055;
+        } else {
+            $output = $input * 12.92;
+        }
+        return $output;
     }
 }

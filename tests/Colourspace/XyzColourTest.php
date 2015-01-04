@@ -67,7 +67,10 @@ class XyzColourTest extends PHPUnit_Framework_TestCase {
 
         $colour = $this->generateXyzColour($X, $Y, $Z);
 
-        $this->assertEquals($R, $colour->getRed(), '', self::DELTA);
+        $colourspace = new sRGBColourspace();
+        $RGB = $colourspace->identify($colour);
+
+        $this->assertEquals($R, $RGB['R'], '', self::DELTA);
     }
 
     /**
@@ -79,7 +82,10 @@ class XyzColourTest extends PHPUnit_Framework_TestCase {
 
         $colour = $this->generateXyzColour($X, $Y, $Z);
 
-        $this->assertEquals($G, $colour->getGreen(), '', self::DELTA);
+        $colourspace = new sRGBColourspace();
+        $RGB = $colourspace->identify($colour);
+
+        $this->assertEquals($G, $RGB['G'], '', self::DELTA);
     }
 
     /**
@@ -91,7 +97,10 @@ class XyzColourTest extends PHPUnit_Framework_TestCase {
 
         $colour = $this->generateXyzColour($X, $Y, $Z);
 
-        $this->assertEquals($B, $colour->getBlue(), '', self::DELTA);
+        $colourspace = new sRGBColourspace();
+        $RGB = $colourspace->identify($colour);
+
+        $this->assertEquals($B, $RGB['B'], '', self::DELTA);
     }
 
     /**

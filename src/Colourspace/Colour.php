@@ -45,28 +45,4 @@ interface Colour {
      * @return float
      */
     public function getZ();
-
-    /**
-     * Gets the red component of this colour's RGB representation; in the
-     * range [0.0–1.0].
-     *
-     * @return float
-     */
-    public function getRed();
-
-    /**
-     * Gets the green component of this colour's RGB representation; in the
-     * range [0.0–1.0].
-     *
-     * @return float
-     */
-    public function getGreen();
-
-    /**
-     * Gets the blue component of this colour's RGB representation; in the
-     * range [0.0–1.0].
-     *
-     * @return float
-     */
-    public function getBlue();
 }

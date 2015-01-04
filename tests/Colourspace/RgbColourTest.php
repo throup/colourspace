@@ -29,10 +29,15 @@ class RgbColourTest extends PHPUnit_Framework_TestCase {
         $blue  = 0.8;
 
         $colour = $this->generateRgbColour($red, $green, $blue);
+        $colourspace = new sRGBColourspace();
 
-        $this->assertEquals($red,   $colour->getRed());
-        $this->assertEquals($green, $colour->getGreen());
-        $this->assertEquals($blue,  $colour->getBlue());
+        $expected = [
+            'R' => $red,
+            'G' => $green,
+            'B' => $blue,
+        ];
+
+        $this->assertEquals($expected, $colourspace->identify($colour));
     }
 
     /**
