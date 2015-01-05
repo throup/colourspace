@@ -21,12 +21,20 @@ abstract class XYZbased implements Space {
      * @return Colour[]
      */
     public function primaries() {
-        $colours = [
-            $this->generate(1, 0, 0),
-            $this->generate(0, 1, 0),
-            $this->generate(0, 0, 1),
-        ];
+        return $this->labelWithPrimaries(
+            [
+                $this->generate(1, 0, 0),
+                $this->generate(0, 1, 0),
+                $this->generate(0, 0, 1),
+            ]
+        );
+    }
 
+    /**
+     * @param $colours
+     * @return array
+     */
+    protected function labelWithPrimaries($colours) {
         $primaries = [];
         foreach ($this->primaryKeys() as $i => $key) {
             $primaries[$key] = $colours[$i];

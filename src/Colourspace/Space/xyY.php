@@ -24,17 +24,6 @@ class xyY extends XYZbased {
     }
 
     /**
-     * @return Colour[]
-     */
-    public function primaries() {
-        return [
-            'x' => $this->generate(1, 0, 0),
-            'y' => $this->generate(0, 1, 0),
-            'Y' => $this->generate(0, 0, 1),
-        ];
-    }
-
-    /**
      * @param Colour $colour
      * @return float[]
      */
