@@ -669,6 +669,38 @@ class MatrixTest extends PHPUnit_Framework_TestCase {
     }
 
     /**
+     * @test
+     */
+    public function entryWithNoCol_returnsValueFromFirstColumn() {
+        $matrix = new Matrix(
+            [
+                [ 1,  2,  3,  4],
+                [ 5,  6,  7,  8],
+                [ 9, 10, 11, 12],
+                [13, 14, 15, 16],
+            ]
+        );
+
+        $this->assertEquals(9, $matrix->entry(3));
+    }
+
+    /**
+     * @test
+     */
+    public function entryWithNoRowOrCol_returnsValueFromFirstRowFirstColumn() {
+        $matrix = new Matrix(
+            [
+                [ 1,  2,  3,  4],
+                [ 5,  6,  7,  8],
+                [ 9, 10, 11, 12],
+                [13, 14, 15, 16],
+            ]
+        );
+
+        $this->assertEquals(1, $matrix->entry());
+    }
+
+    /**
      * @return Matrix
      */
     protected function exampleNonSquareMatrix() {

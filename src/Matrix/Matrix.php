@@ -217,7 +217,7 @@ class Matrix extends ArrayIterator {
      *
      * @return float
      */
-    public function entry($row, $col) {
+    public function entry($row = 1, $col = 1) {
         return $this[$row - 1][$col - 1];
     }
 }
