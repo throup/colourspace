@@ -701,6 +701,70 @@ class MatrixTest extends PHPUnit_Framework_TestCase {
     }
 
     /**
+     * @test
+     */
+    public function transpose_1x1Matrix() {
+        $matrix = new Matrix(
+            [
+                [1],
+            ]
+        );
+
+        $expected = new Matrix(
+            [
+                [1],
+            ]
+        );
+
+        $this->assertEquals($expected, $matrix->transpose());
+    }
+
+    /**
+     * @test
+     */
+    public function transpose_2x2Matrix() {
+        $matrix = new Matrix(
+            [
+                [1, 2],
+                [3, 4],
+            ]
+        );
+
+        $expected = new Matrix(
+            [
+                [1, 3],
+                [2, 4],
+            ]
+        );
+
+        $this->assertEquals($expected, $matrix->transpose());
+    }
+
+    /**
+     * @test
+     */
+    public function transpose_3x4Matrix() {
+        $matrix = new Matrix(
+            [
+                [ 1,  2,  3,  4],
+                [ 4,  5,  6,  7],
+                [ 9, 10, 11, 12],
+            ]
+        );
+
+        $expected = new Matrix(
+            [
+                [ 1,  4,  9],
+                [ 2,  5, 10],
+                [ 3,  6, 11],
+                [ 4,  7, 12],
+            ]
+        );
+
+        $this->assertEquals($expected, $matrix->transpose());
+    }
+
+    /**
      * @return Matrix
      */
     protected function exampleNonSquareMatrix() {

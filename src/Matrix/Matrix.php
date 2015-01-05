@@ -220,4 +220,21 @@ class Matrix extends ArrayIterator {
     public function entry($row = 1, $col = 1) {
         return $this[$row - 1][$col - 1];
     }
+
+    /**
+     * Returns the transposed form of the matrix.
+     *
+     * @return self
+     */
+    public function transpose() {
+        $rows = $this->rows();
+        $cols = $this->columns();
+        $data = [];
+        for ($i = 0; $i < $cols; $i++) {
+            for ($j = 0; $j < $rows; $j++) {
+                $data[$i][$j] = $this[$j][$i];
+            }
+        }
+        return new self($data);
+    }
 }
