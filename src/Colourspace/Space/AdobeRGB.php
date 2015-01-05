@@ -1,6 +1,6 @@
 <?php
 /**
- * This file contains the sRGB class.
+ * This file contains the AdobeRGB class.
  *
  * @author    Chris Throup <chris@throup.org.uk>
  * @copyright 2014-2015 Chris Throup
@@ -12,29 +12,28 @@ namespace Colourspace\Colourspace\Space;
 use Colourspace\Colourspace\Colour;
 use Colourspace\Colourspace\Space;
 use Colourspace\Colourspace\StandardIlluminantFactory;
-
+use Colourspace\Matrix\Matrix;
 
 /**
- * Represents the sRGB colourspace.
+ * Represents the AdobeRGB colourspace.
  */
-class sRGB extends RGB {
+class AdobeRGB extends RGB {
     public function __construct() {
         $factory = new StandardIlluminantFactory();
         $xyY     = new Space\xyY();
 
         $this->referenceWhite = $factory->D(65);
         $this->primaryRed     = $xyY->generate(0.6400, 0.3300, 1);
-        $this->primaryGreen   = $xyY->generate(0.3000, 0.6000, 1);
+        $this->primaryGreen   = $xyY->generate(0.2100, 0.7100, 1);
         $this->primaryBlue    = $xyY->generate(0.1500, 0.0600, 1);
+        $this->gamma          = 563/256;
     }
 
     /**
      * Reverses the companding of RGB values; returning them to their linear
      * values.
      *
-     * For most RGB colour spaces this will involve applying a gamma curve.
-     * For the sRGB colour space we do something a bit funky with the smaller
-     * values.
+     * For the AdobeRGB colour spaces this involves applying a gamma curve.
      *
      * @see http://www.brucelindbloom.com/Eqn_RGB_to_XYZ.html
      *
@@ -43,21 +42,14 @@ class sRGB extends RGB {
      * @return float
      */
     protected function inverseCompand($input) {
-        if ($input > 0.04045) {
-            $output = pow((($input + 0.055) / 1.055), 2.4);
-        } else {
-            $output = $input / 12.92;
-        }
-        return $output;
+        return pow($input, $this->gamma);
     }
 
     /**
      * Compands linear RGB values into their "real" values within this colour
      * space.
      *
-     * For most RGB colour spaces this will involve applying a gamma curve.
-     * For the sRGB colour space we do something a bit funky with the smaller
-     * values.
+     * For the AdobeRGB colour spaces this involves applying a gamma curve.
      *
      * @see http://www.brucelindbloom.com/Eqn_XYZ_to_RGB.html
      *
@@ -66,11 +58,15 @@ class sRGB extends RGB {
      * @return float
      */
     protected function compand($input) {
-        if ($input > 0.031308) {
-            $output = 1.055 * pow($input, 1/2.4) - 0.055;
+        if ($input > 0) {
+            return pow($input, 1 / $this->gamma);
         } else {
-            $output = $input * 12.92;
+            return 0;
         }
-        return $output;
     }
+
+    /**
+     * @var float The exponent used for companding linear values.
+     */
+    private $gamma;
 }

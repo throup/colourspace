@@ -1,6 +1,6 @@
 <?php
 /**
- * This file contains test cases for the sRGB class.
+ * This file contains test cases for the AdobeRGB class.
  *
  * @author    Chris Throup <chris@throup.org.uk>
  * @copyright 2014-2015 Chris Throup
@@ -13,16 +13,16 @@ use Colourspace\Colourspace\Colour;
 use Colourspace\Colourspace\Space;
 
 /**
- * Tests for the representation of the sRGB colourspace.
+ * Tests for the representation of the AdobeRGB colourspace.
  *
  * @see http://www.brucelindbloom.com/ColorCalculator.html
  */
-class sRGBColourspaceTest extends TestCase {
+class AdobeRGBColourspaceTest extends TestCase {
     /**
      * @before
      */
     public function setUp() {
-        $this->colourspace = new Space\sRGB();
+        $this->colourspace = new Space\AdobeRGB();
         parent::setUp();
     }
 
@@ -59,9 +59,9 @@ class sRGBColourspaceTest extends TestCase {
      */
     public function primaries_data() {
         return [
-            ['R', 0.412456, 0.212673, 0.019334],
-            ['G', 0.357576, 0.715152, 0.119192],
-            ['B', 0.180437, 0.072175, 0.950304],
+            ['R', 0.576731, 0.297377, 0.027034],
+            ['G', 0.185554, 0.627349, 0.070687],
+            ['B', 0.188185, 0.075274, 0.991109],
         ];
     }
 
@@ -82,9 +82,9 @@ class sRGBColourspaceTest extends TestCase {
     public function XYZ_data() {
         return [
         //   X         Y         Z         R    G    B
-            [0.412456, 0.212673, 0.019334, 1.0, 0.0, 0.0],
-            [0.357576, 0.715152, 0.119192, 0.0, 1.0, 0.0],
-            [0.180437, 0.072175, 0.950304, 0.0, 0.0, 1.0],
+            [0.576731, 0.297377, 0.027034, 1.0, 0.0, 0.0],
+            [0.185554, 0.627349, 0.070687, 0.0, 1.0, 0.0],
+            [0.188185, 0.075274, 0.991109, 0.0, 0.0, 1.0],
         ];
     }
 }

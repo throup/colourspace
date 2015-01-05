@@ -121,7 +121,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
         }
         $result = $this->colourspace->identify($colour);
 
-        $this->assertEquals($expected, $result, '', 0.00030017);
+        $this->assertEquals($expected, $result, '', 0.00094);
     }
 
     /**
@@ -159,7 +159,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase {
         }
         $result = $this->colourspace->identify($colour);
 
-        $this->assertEquals($expected, $result);
+        $this->assertEquals($expected, $result, '', 0.000000016);
     }
 
     /**
