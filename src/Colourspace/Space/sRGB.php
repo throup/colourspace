@@ -18,6 +18,97 @@ use Colourspace\Matrix\Matrix;
  * Represents the sRGB colourspace.
  */
 class sRGB extends XYZbased {
+    public function __construct() {
+        $factory = new StandardIlluminantFactory();
+        $xyY     = new Space\xyY();
+
+        $this->referenceWhite = $factory->D(65);
+        $this->primaryRed     = $xyY->generate(0.6400, 0.3300, 1);
+        $this->primaryGreen   = $xyY->generate(0.3000, 0.6000, 1);
+        $this->primaryBlue    = $xyY->generate(0.1500, 0.0600, 1);
+    }
+
+    /**
+     * @param float $R
+     * @param float $G
+     * @param float $B
+     * @return Colour
+     */
+    public function generate($R, $G, $B) {
+        $RGB = new Matrix(
+            [
+                [$this->inverseCompand($R)],
+                [$this->inverseCompand($G)],
+                [$this->inverseCompand($B)],
+            ]
+        );
+
+        $matrix = $this->transformationMatrix();
+
+        $XYZ = $matrix->product($RGB);
+        $X = $XYZ->entry(1);
+        $Y = $XYZ->entry(2);
+        $Z = $XYZ->entry(3);
+
+        return parent::generate($X, $Y, $Z);
+    }
+
+    /**
+     * Reverses the companding of RGB values; returning them to their linear
+     * values.
+     *
+     * For most RGB colour spaces this will involve applying a gamma curve.
+     * For the sRGB colour space we do something a bit funky with the smaller
+     * values.
+     *
+     * @see http://www.brucelindbloom.com/Eqn_RGB_to_XYZ.html
+     *
+     * @param float $input The companded value.
+     *
+     * @return float
+     */
+    protected function inverseCompand($input) {
+        if ($input > 0.04045) {
+            $output = pow((($input + 0.055) / 1.055), 2.4);
+        } else {
+            $output = $input / 12.92;
+        }
+        return $output;
+    }
+
+    /**
+     * Returns the transformation matrix for this colour space.
+     *
+     * @return Matrix
+     */
+    protected function transformationMatrix() {
+        $W = $this->colourAsMatrix($this->referenceWhite);
+        $R = $this->colourAsMatrix($this->primaryRed);
+        $G = $this->colourAsMatrix($this->primaryGreen);
+        $B = $this->colourAsMatrix($this->primaryBlue);
+
+
+        $colours = new Matrix(
+            [
+                [$R->entry(1), $G->entry(1), $B->entry(1)],
+                [$R->entry(2), $G->entry(2), $B->entry(2)],
+                [$R->entry(3), $G->entry(3), $B->entry(3)],
+            ]
+        );
+
+        $coloursI = $colours->inverse();
+
+        $S = $coloursI->product($W);
+
+        return new Matrix(
+            [
+                [$S->entry(1) * $R->entry(1), $S->entry(2) * $G->entry(1), $S->entry(3) * $B->entry(1)],
+                [$S->entry(1) * $R->entry(2), $S->entry(2) * $G->entry(2), $S->entry(3) * $B->entry(2)],
+                [$S->entry(1) * $R->entry(3), $S->entry(2) * $G->entry(3), $S->entry(3) * $B->entry(3)],
+            ]
+        );
+    }
+
     /**
      * Calculates the RGB representation for this colour.
      *
@@ -41,179 +132,43 @@ class sRGB extends XYZbased {
             ]
         );
 
-        $matrix = $this->sRGBinverseMatrix();
+        $matrix = $this->inverseTransformationMatrix();
 
         $RGB = $matrix->product($XYZ);
 
         return [
-            'R' => $this->applyGamma2($RGB[0][0]),
-            'G' => $this->applyGamma2($RGB[1][0]),
-            'B' => $this->applyGamma2($RGB[2][0]),
+            'R' => $this->compand($RGB->entry(1)),
+            'G' => $this->compand($RGB->entry(2)),
+            'B' => $this->compand($RGB->entry(3)),
         ];
     }
 
     /**
-     * @param float $R
-     * @param float $G
-     * @param float $B
-     * @return Colour
-     */
-    public function generate($R, $G, $B) {
-        $RGB = new Matrix(
-            [
-                [$this->applyGamma($R)],
-                [$this->applyGamma($G)],
-                [$this->applyGamma($B)],
-            ]
-        );
-
-        $matrix = $this->sRGBmatrix();
-
-        $XYZ = $matrix->product($RGB);
-        $X = $XYZ[0][0];
-        $Y = $XYZ[1][0];
-        $Z = $XYZ[2][0];
-
-        return parent::generate($X, $Y, $Z);
-    }
-
-    /**
-     * Applies the gamma curve appropriate to this RGB colour space.
-     *
-     * NB this initial implementation is for the sRGB space which does
-     * something a bit funky with the smaller values. Most RGB spaces simply
-     * apply an exponential factor.
-     *
-     * @param float $input The value to which the adjustment should be applied.
-     *
-     * @return float
-     */
-    protected function applyGamma($input) {
-        if ($input > 0.04045) {
-            $output = pow((($input + 0.055) / 1.055), 2.4);
-        } else {
-            $output = $input / 12.92;
-        }
-        return $output;
-    }
-
-    /**
-     * Returns the standard sRGB transformation matrix.
+     * Returns the inverse of the transformation matrix for this colour space.
      *
      * @return Matrix
      */
-    protected function sRGBmatrix() {
-        $W = $this->referenceWhite();
-        $R = $this->primaryRed();
-        $G = $this->primaryGreen();
-        $B = $this->primaryBlue();
-
-
-        $colours = new Matrix(
-            [
-                [$R[0][0], $G[0][0], $B[0][0]],
-                [$R[1][0], $G[1][0], $B[1][0]],
-                [$R[2][0], $G[2][0], $B[2][0]],
-            ]
-        );
-
-        $coloursI = $colours->inverse();
-
-        $S = $coloursI->product($W);
-
-        return new Matrix(
-            [
-                [$S[0][0] * $R[0][0], $S[1][0] * $G[0][0], $S[2][0] * $B[0][0]],
-                [$S[0][0] * $R[1][0], $S[1][0] * $G[1][0], $S[2][0] * $B[1][0]],
-                [$S[0][0] * $R[2][0], $S[1][0] * $G[2][0], $S[2][0] * $B[2][0]],
-            ]
-        );
-    }
-
-    /**
-     * @return Matrix
-     */
-    protected function referenceWhite() {
-        $factory = new StandardIlluminantFactory();
-        $illuminant = $factory->D(65);
-
-        return new Matrix(
-            [
-                [$illuminant->getX()],
-                [$illuminant->getY()],
-                [$illuminant->getZ()],
-            ]
-        );
-    }
-
-    /**
-     * @return Matrix
-     */
-    protected function primaryRed() {
-        $colourspace = new Space\xyY();
-        $colour = $colourspace->generate(0.6400, 0.3300, 1);
-        return new Matrix(
-            [
-                [$colour->getX()],
-                [$colour->getY()],
-                [$colour->getZ()],
-            ]
-        );
-    }
-
-    /**
-     * @return Matrix
-     */
-    protected function primaryGreen() {
-        $colourspace = new Space\xyY();
-        $colour = $colourspace->generate(0.3000, 0.6000, 1);
-        return new Matrix(
-            [
-                [$colour->getX()],
-                [$colour->getY()],
-                [$colour->getZ()],
-            ]
-        );
-    }
-
-    /**
-     * @return Matrix
-     */
-    protected function primaryBlue() {
-        $colourspace = new Space\xyY();
-        $colour = $colourspace->generate(0.1500, 0.0600, 1);
-        return new Matrix(
-            [
-                [$colour->getX()],
-                [$colour->getY()],
-                [$colour->getZ()],
-            ]
-        );
-    }
-
-    /**
-     * Returns the inverse of the standard sRGB transformation matrix.
-     *
-     * @return Matrix
-     */
-    protected function sRGBinverseMatrix() {
-        $matrix = $this->sRGBmatrix();
+    protected function inverseTransformationMatrix() {
+        $matrix = $this->transformationMatrix();
         return $matrix->inverse();
     }
 
 
     /**
-     * Applies the gamma curve appropriate to this XYZ colour space.
+     * Compands linear RGB values into their "real" values within this colour
+     * space.
      *
-     * NB this initial implementation is for the sXYZ space which does
-     * something a bit funky with the smaller values. Most XYZ spaces simply
-     * apply an exponential factor.
+     * For most RGB colour spaces this will involve applying a gamma curve.
+     * For the sRGB colour space we do something a bit funky with the smaller
+     * values.
      *
-     * @param float $input The value to which the adjustment should be applied.
+     * @see http://www.brucelindbloom.com/Eqn_XYZ_to_RGB.html
+     *
+     * @param float $input The value to be companded.
      *
      * @return float
      */
-    protected function applyGamma2($input) {
+    protected function compand($input) {
         if ($input > 0.031308) {
             $output = 1.055 * pow($input, 1/2.4) - 0.055;
         } else {
@@ -228,4 +183,24 @@ class sRGB extends XYZbased {
     protected function primaryKeys() {
         return ['R', 'G', 'B'];
     }
+
+    /**
+     * @var Colour The white point for this colour space.
+     */
+    private $referenceWhite;
+
+    /**
+     * @var Colour the red primary for this colour space.
+     */
+    private $primaryRed;
+
+    /**
+     * @var Colour the green primary for this colour space.
+     */
+    private $primaryGreen;
+
+    /**
+     * @var Colour the blue primary for this colour space.
+     */
+    private $primaryBlue;
 }

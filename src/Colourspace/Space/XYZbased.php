@@ -11,6 +11,7 @@ namespace Colourspace\Colourspace\Space;
 
 use Colourspace\Colourspace\Colour;
 use Colourspace\Colourspace\Space;
+use Colourspace\Matrix\Matrix;
 
 /**
  * Class XYZbased
@@ -53,5 +54,23 @@ abstract class XYZbased implements Space {
      */
     public function whitePoint() {
         return $this->generate(1, 1, 1);
+    }
+
+    /**
+     * Returns a Matrix representing the given Colour as a column vector of XYZ
+     * values.
+     *
+     * @param  Colour $colour
+     *
+     * @return Matrix
+     */
+    protected function colourAsMatrix(Colour $colour) {
+        return new Matrix(
+            [
+                [$colour->getX()],
+                [$colour->getY()],
+                [$colour->getZ()],
+            ]
+        );
     }
 }
