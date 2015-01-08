@@ -18,11 +18,16 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "Colourspace\\": "tests/"
+      "Colourspace\\": [
+        "tests/",
+        "features/bootstrap/"
+      ]
     }
   },
   "include-path": ["src"],
   "require-dev": {
+    "behat/behat": "dev-master#2c9587e105d481acec557abec3ba939d927dadb3",
+    "emuse/behat-html-formatter": "dev-master",
     "phing/phing": "~2.9",
     "squizlabs/php_codesniffer": "~2.1",
     "sebastian/phpcpd": "~2",
@@ -32,7 +37,17 @@
     "phploc/phploc": "~2",
     "phpmd/phpmd": "~2.1",
     "phpunit/phpunit": "~4.4",
-    "halleck45/php-metrics": "*",
-    "mayflower/php-codebrowser": "*"
-  }
+    "halleck45/php-metrics": "~1.1",
+    "mayflower/php-codebrowser": "~1.1"
+  },
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/james75/Behat.git"
+    },
+    {
+      "type": "vcs",
+      "url": "https://github.com/dutchiexl/BehatHtmlFormatterPlugin.git"
+    }
+  ]
 }

@@ -18,12 +18,14 @@
     <property name="bin.phpmetrics"  value="${vendordir}/bin/phpmetrics"/>
     <property name="bin.pdepend" value="${vendordir}/bin/pdepend"/>
     <property name="bin.codebrowser" value="${vendordir}/bin/phpcb"/>
+    <property name="bin.behat" value="${vendordir}/bin/behat"/>
 
 
     <property name="config.phpunit" value="${configdir}/phpunit.xml"/>
     <property name="config.phpdox" value="${configdir}/phpdox.xml"/>
     <property name="config.phpdoc" value="${configdir}/phpdoc.xml"/>
     <property name="config.phpcs" value="${configdir}/ColourspaceStandard/ruleset.xml"/>
+    <property name="config.behat" value="${configdir}/behat.yml"/>
 
     <fileset dir="${sourcedir}" id="files.source">
         <include name="**/*.php" />
@@ -136,5 +138,18 @@
         </exec>
     </target>
 
-    <target name="build" depends="phpdox,phpcpd,phpdcd,phpdepend,phpmetrics,codebrowser"/>
+    <target name="behat" depends="prepare">
+        <delete file="${vendordir}/emuse/behat-html-formatter/reports/test_report.html"/>
+        <mkdir dir="${builddir}/behat/"/>
+        <mkdir dir="${docdir}/behat/"/>
+        <exec executable="${bin.behat}" logoutput="/dev/stdout">
+            <arg value="--config"/><arg path="${config.behat}"/>
+            <arg value="--format"/><arg value="junit"/>
+            <arg value="--out"/><arg path="${builddir}/behat/"/>
+            <arg value="--format"/><arg value="html"/>
+        </exec>
+        <move file="${vendordir}/emuse/behat-html-formatter/reports/test_report.html" tofile="${docdir}/behat/index.html"/>
+    </target>
+
+    <target name="build" depends="phpdox,phpcpd,phpdcd,phpdepend,phpmetrics,codebrowser,behat"/>
 </project>
