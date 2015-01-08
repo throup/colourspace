@@ -148,7 +148,12 @@
             <arg value="--out"/><arg path="${builddir}/behat/"/>
             <arg value="--format"/><arg value="html"/>
         </exec>
-        <move file="${vendordir}/emuse/behat-html-formatter/reports/test_report.html" tofile="${docdir}/behat/index.html"/>
+        <copy todir="${docdir}/behat/">
+            <fileset dir="${vendordir}/emuse/behat-html-formatter">
+                <include name="reports/**"/>
+                <include name="assets/**"/>
+            </fileset>
+        </copy>
     </target>
 
     <target name="build" depends="phpdox,phpcpd,phpdcd,phpdepend,phpmetrics,codebrowser,behat"/>
