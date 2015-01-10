@@ -15,23 +15,36 @@ class FeatureContext implements Context, SnippetAcceptingContext {
      * @Given I have an sRGB colour defined as RGB(:red, :green, :blue)
      */
     public function iHaveAnSrgbColourDefinedAsRgb($red, $green, $blue) {
-        $this->red   = $red;
-        $this->green = $green;
-        $this->blue  = $blue;
+        $this->input = [
+            'R' => $red,
+            'G' => $green,
+            'B' => $blue,
+        ];
+    }
+
+    /**
+     * @Given I have an XYZ colour defined as XYZ(:X, :Y, :Z)
+     */
+    public function iHaveAnXyzColourDefinedAsXyz($X, $Y, $Z) {
+        $this->input = [
+            'X' => $X,
+            'Y' => $Y,
+            'Z' => $Z,
+        ];
     }
 
     /**
      * @When I convert the colour to XYZ
      */
     public function iConvertTheColourToXyz() {
-        $usecase = new Usecase\sRGB_to_XYZ();
-        $this->response = $usecase->execute(
-            [
-                'R' => $this->red,
-                'G' => $this->green,
-                'B' => $this->blue,
-            ]
-        );
+        $this->usecase = new Usecase\sRGB_to_XYZ();
+    }
+
+    /**
+     * @When I convert the colour to sRGB
+     */
+    public function iConvertTheColourToSrgb() {
+        $this->usecase = new Usecase\XYZ_to_sRGB();
     }
 
     /**
@@ -44,26 +57,35 @@ class FeatureContext implements Context, SnippetAcceptingContext {
             'Z' => $Z,
         ];
 
-        PHPUnit_Framework_Assert::assertEquals($expected, $this->response, '', 0.065);
+        $this->validateResponse($expected, 0.065);
     }
 
     /**
-     * @var float
+     * @Then I should have the colour defined as RGB(:red, :green, :blue)
      */
-    private $red   = 0.0;
+    public function iShouldHaveTheColourDefinedAsRgb($red, $green, $blue) {
+        $expected = [
+            'R' => $red,
+            'G' => $green,
+            'B' => $blue,
+        ];
+
+        $this->validateResponse($expected, 0.08);
+    }
 
     /**
-     * @var float
+     * @param $expected
+     * @param $delta
      */
-    private $green = 0.0;
+    protected function validateResponse($expected, $delta) {
+        PHPUnit_Framework_Assert::assertEquals($expected,
+                                               $this->usecase->execute($this->input),
+                                               '',
+                                               $delta);
+    }
 
     /**
-     * @var float
+     * @var Usecase
      */
-    private $blue  = 0.0;
-
-    /**
-     * @var array
-     */
-    private $response = [];
+    private $usecase;
 }

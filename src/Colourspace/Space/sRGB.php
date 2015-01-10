@@ -66,7 +66,7 @@ class sRGB extends RGB {
      * @return float
      */
     protected function compand($input) {
-        if ($input > 0.031308) {
+        if ($input > 0.0031308) {
             $output = 1.055 * pow($input, 1/2.4) - 0.055;
         } else {
             $output = $input * 12.92;
