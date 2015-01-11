@@ -41,12 +41,7 @@ class XYZ_to_Lab implements Usecase {
             $input['Z'] / 100
         );
 
-        return array_map(
-            function ($val) {
-                return $val * 255;
-            },
-            $this->Lab->identify($colour)
-        );
+        return $this->Lab->identify($colour);
     }
 
     /**

@@ -62,42 +62,16 @@ class FeatureContext implements Context, SnippetAcceptingContext {
     }
 
     /**
-     * @Then I should have the colour defined as XYZ(:X, :Y, :Z)
+     * @Then /^I should have the colour defined as (\w)(\w)(\w)\(([\d\.\-]+),\s*([\d\.\-]+),\s*([\d\.\-]+)\)$/
      */
-    public function iShouldHaveTheColourDefinedAsXyz($X, $Y, $Z) {
+    public function iShouldHaveTheColourDefinedAs($k1, $k2, $k3, $v1, $v2, $v3) {
         $expected = [
-            'X' => $X,
-            'Y' => $Y,
-            'Z' => $Z,
-        ];
-
-        $this->validateResponse($expected, 0.065);
-    }
-
-    /**
-     * @Then I should have the colour defined as RGB(:red, :green, :blue)
-     */
-    public function iShouldHaveTheColourDefinedAsRgb($red, $green, $blue) {
-        $expected = [
-            'R' => $red,
-            'G' => $green,
-            'B' => $blue,
+            $k1 => $v1,
+            $k2 => $v2,
+            $k3 => $v3,
         ];
 
         $this->validateResponse($expected, 0.08);
-    }
-
-    /**
-     * @Then I should have the colour defined as Lab(:L, :a, :b)
-     */
-    public function iShouldHaveTheColourDefinedAsLab($L, $a, $b) {
-        $expected = [
-            'L' => $L,
-            'a' => $a,
-            'b' => $b,
-        ];
-
-        $this->validateResponse($expected, 0.065);
     }
 
     /**
@@ -105,9 +79,10 @@ class FeatureContext implements Context, SnippetAcceptingContext {
      * @param $delta
      */
     protected function validateResponse($expected, $delta) {
+        $actual = $this->usecase->execute($this->input);
         PHPUnit_Framework_Assert::assertEquals($expected,
-                                               $this->usecase->execute($this->input),
-                                               '',
+                                               $actual,
+                                               var_export($actual, true),
                                                $delta);
     }
 
