@@ -34,6 +34,13 @@ class FeatureContext implements Context, SnippetAcceptingContext {
     }
 
     /**
+     * @Given I am using standard illuminant: D65
+     */
+    public function iAmUsingStandardIlluminantD65() {
+        // Do nothing.
+    }
+
+    /**
      * @When I convert the colour to XYZ
      */
     public function iConvertTheColourToXyz() {
@@ -45,6 +52,13 @@ class FeatureContext implements Context, SnippetAcceptingContext {
      */
     public function iConvertTheColourToSrgb() {
         $this->usecase = new Usecase\XYZ_to_sRGB();
+    }
+
+    /**
+     * @When I convert the colour to Lab
+     */
+    public function iConvertTheColourToLab() {
+        $this->usecase = new Usecase\XYZ_to_Lab();
     }
 
     /**
@@ -71,6 +85,19 @@ class FeatureContext implements Context, SnippetAcceptingContext {
         ];
 
         $this->validateResponse($expected, 0.08);
+    }
+
+    /**
+     * @Then I should have the colour defined as Lab(:L, :a, :b)
+     */
+    public function iShouldHaveTheColourDefinedAsLab($L, $a, $b) {
+        $expected = [
+            'L' => $L,
+            'a' => $a,
+            'b' => $b,
+        ];
+
+        $this->validateResponse($expected, 0.065);
     }
 
     /**

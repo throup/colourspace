@@ -144,6 +144,7 @@
         <mkdir dir="${docdir}/behat/"/>
         <exec executable="${bin.behat}" logoutput="/dev/stdout">
             <arg value="--config"/><arg path="${config.behat}"/>
+            <arg value="--tags"/><arg value="~wip"/>
             <arg value="--format"/><arg value="junit"/>
             <arg value="--out"/><arg path="${builddir}/behat/"/>
             <arg value="--format"/><arg value="html"/>
