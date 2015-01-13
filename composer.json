@@ -49,5 +49,8 @@
       "type": "vcs",
       "url": "https://github.com/dutchiexl/BehatHtmlFormatterPlugin.git"
     }
-  ]
+  ],
+  "config": {
+    "discard-changes": true
+  }
 }

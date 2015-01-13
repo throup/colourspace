@@ -148,10 +148,10 @@
             <arg value="--format"/><arg value="junit"/>
             <arg value="--out"/><arg path="${builddir}/behat/"/>
             <arg value="--format"/><arg value="html"/>
+            <arg value="--out"/><arg path="${docdir}/behat/"/>
         </exec>
         <copy todir="${docdir}/behat/">
             <fileset dir="${vendordir}/emuse/behat-html-formatter">
-                <include name="reports/**"/>
                 <include name="assets/**"/>
             </fileset>
         </copy>
