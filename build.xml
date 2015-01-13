@@ -155,12 +155,6 @@
                 <include name="assets/**"/>
             </fileset>
         </copy>
-        <copy todir="${docdir}/behat/reports">
-            <fileset dir="${configdir}/${builddir}/behat">
-                <include name="**"/>
-            </fileset>
-        </copy>
-        <delete includeemptydirs="true" dir="${configdir}/${builddir}"/>
     </target>
 
     <target name="build" depends="phpdox,phpcpd,phpdcd,phpdepend,phpmetrics,codebrowser,behat"/>
