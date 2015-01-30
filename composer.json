@@ -28,8 +28,8 @@
   "require-dev": {
     "behat/behat": "dev-master#2c9587e105d481acec557abec3ba939d927dadb3",
     "emuse/behat-html-formatter": "dev-master",
-    "phing/phing": "~2.9",
-    "squizlabs/php_codesniffer": "~2.1",
+    "phing/phing": "dev-master",
+    "squizlabs/php_codesniffer": "~2.2",
     "sebastian/phpcpd": "~2",
     "sebastian/phpdcd": "~1",
     "phpdocumentor/phpdocumentor": "~2.8",
