@@ -139,7 +139,6 @@
     </target>
 
     <target name="behat" depends="prepare">
-        <delete file="${vendordir}/emuse/behat-html-formatter/reports/test_report.html"/>
         <mkdir dir="${builddir}/behat/"/>
         <mkdir dir="${docdir}/behat/"/>
         <exec executable="${bin.behat}" logoutput="/dev/stdout">
